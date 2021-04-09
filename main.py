@@ -1,3 +1,10 @@
+import pygame
+import sys
+
+pygame.init()
+SCREEN = pygame.display.set_mode((640, 320))
+
+
 class Emulator:
     def __init__(self):
         self.memory = [0] * 4096
