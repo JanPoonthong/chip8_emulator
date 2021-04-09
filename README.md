@@ -1,1 +1,1 @@
-# Chip-8 emulator (soon)
+# Chip-8 emulator
