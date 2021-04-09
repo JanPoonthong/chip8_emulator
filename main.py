@@ -50,24 +50,33 @@ class Output:
         return self.display[x + (y * self.column)]
 
     def clear(self):
-        return self.display
+        black = 0, 0, 0
+        self.drawing_pixel(black)
 
-    def main(self):
-        self.set_pixel(5, 5)
-        self.render_pixel()
-
-    def render_pixel(self):
+    def drawing_pixel(self, color):
         for x in range(self.column):
             for y in range(self.row):
                 if self.get_pixel(x, y):
-                    pygame.draw.rect(SCREEN, (255, 255, 255),
+                    pygame.draw.rect(SCREEN, color,
                                      (x, y, 10, 10))
+
+    def main(self):
+        self.set_pixel(5, 5)
+        self.set_pixel(500, 500)
+        self.render_pixel()
+
+    def render_pixel(self):
+        white = 255, 255, 255
+        self.drawing_pixel(white)
+
+    def pygame_display_screen(self):
+        pygame.time.Clock().tick(15)
+        self.main()
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                sys.exit()
+        pygame.display.update()
 
 
 while True:
-    pygame.time.Clock().tick(15)
-    Output().main()
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            sys.exit()
-    pygame.display.update()
+    Output().pygame_display_screen()
