@@ -14,6 +14,41 @@ class Emulator:
         self.program_counter = 0
         self.index = 0
         self.stack = []
+        self.speed = 10
+
+    def interpreter(self, intruction):
+        self.program_counter += 2
+        x = (intruction & 0x0F00) >> 8
+        y = (intruction & 0x00F0) >> 4
+
+        if intruction & 0xF000:
+            if 0x0000:
+                if 0x00E0:
+                    Output().clear()
+                if 0x0EE:
+                    self.program_counter = self.stack.pop()
+            if 0x1000:
+                pass
+            if 0x2000:
+                self.stack.append(self.program_counter)
+                self.program_counter = intruction & 0xFFF
+            if 0x3000:
+                if self.register[x] == intruction & 0xFF:
+                    self.program_counter += 2
+            if 0x4000:
+                if self.register[x] != intruction & 0xFF:
+                    self.program_counter += 2
+            if 0x5000:
+                if self.register[x] == self.register[y]:
+                    self.program_counter += 2
+            if 0x6000:
+                self.register[x] == intruction & 0xFF
+            if 0x7000:
+                self.register[x] += intruction & 0xFF
+            if 0x8000:
+                if intruction & 0xF:
+                    if 0x0:
+                        pass
 
 
 class Input:
