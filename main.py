@@ -62,7 +62,7 @@ class Output:
 
     def clear(self):
         black = 0, 0, 0
-        self.drawing_pixel(black)
+        SCREEN.fill(black)
 
     def drawing_pixel(self, color):
         for x in range(self.column):
