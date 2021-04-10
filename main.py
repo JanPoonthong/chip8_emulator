@@ -21,34 +21,10 @@ class Emulator:
         x = (intruction & 0x0F00) >> 8
         y = (intruction & 0x00F0) >> 4
 
-        if intruction & 0xF000:
-            if intruction == 0x0000:
-                if intruction == 0x00E0:
-                    Output().clear()
-                if intruction == 0x0EE:
-                    self.program_counter = self.stack.pop()
-            if intruction == 0x1000:
-                pass
-            if intruction == 0x2000:
-                self.stack.append(self.program_counter)
-                self.program_counter = intruction & 0xFFF
-            if intruction == 0x3000:
-                if self.register[x] == intruction & 0xFF:
-                    self.program_counter += 2
-            if intruction == 0x4000:
-                if self.register[x] != intruction & 0xFF:
-                    self.program_counter += 2
-            if intruction == 0x5000:
-                if self.register[x] == self.register[y]:
-                    self.program_counter += 2
-            if intruction == 0x6000:
-                self.register[x] == intruction & 0xFF
-            if intruction == 0x7000:
-                self.register[x] += intruction & 0xFF
-            if intruction == 0x8000:
-                if intruction & 0xF:
-                    if 0x0:
-                        pass
+        first_hex = intruction & 0xF000
+        if first_hex == 0x0000:
+            if intruction == 0x00E0:
+                Output().clear()
 
 
 class Input:
@@ -99,7 +75,7 @@ class Output:
         self.set_pixel(5, 5)
         self.set_pixel(500, 500)
         self.render_pixel()
-        Emulator().interpreter(0x2000)
+        Emulator().interpreter(0x00E0)
 
     def render_pixel(self):
         white = 255, 255, 255
