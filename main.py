@@ -16,16 +16,16 @@ class Emulator:
         self.stack = []
         self.speed = 10
 
-    def interpreter(self, intruction):
+    def interpreter(self, instruction):
         self.program_counter += 2
-        x = (intruction & 0x0F00) >> 8
-        y = (intruction & 0x00F0) >> 4
+        x = (instruction & 0x0F00) >> 8
+        y = (instruction & 0x00F0) >> 4
 
-        first_hex = intruction & 0xF000
+        first_hex = instruction & 0xF000
         if first_hex == 0x0000:
-            if intruction == 0x00E0:
+            if instruction == 0x00E0:
                 Output().clear()
-            if intruction == 0x0EE:
+            if instruction == 0x0EE:
                 self.program_counter = self.stack.pop()
 
 
