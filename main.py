@@ -25,6 +25,8 @@ class Emulator:
         if first_hex == 0x0000:
             if intruction == 0x00E0:
                 Output().clear()
+            if intruction == 0x0EE:
+                self.program_counter = self.stack.pop()
 
 
 class Input:
@@ -75,7 +77,7 @@ class Output:
         self.set_pixel(5, 5)
         self.set_pixel(500, 500)
         self.render_pixel()
-        Emulator().interpreter(0x00E0)
+        Emulator().interpreter(0x0EE)
 
     def render_pixel(self):
         white = 255, 255, 255
