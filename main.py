@@ -50,11 +50,11 @@ class Emulator:
             if last_hex == 0x0:
                 self.register[x] = self.register[y]
             if last_hex == 0x1:
-                self.register[x] = self.register[x] | self.register[y]
+                self.register[x] |= self.register[y]
             if last_hex == 0x2:
-                self.register[x] = self.register[x] & self.register[y]
+                self.register[x] &= self.register[y]
             if last_hex == 0x3:
-                self.register[x] = self.register[x] ^ self.register[y]
+                self.register[x] ^= self.register[y]
             if last_hex == 0x4:
                 # TODO(jan): set VF = carry
                 self.register[x] += self.register[y]
