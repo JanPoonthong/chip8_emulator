@@ -97,6 +97,15 @@ class Input:
         self.keyboard = [0] * 16
 
 
+class Rom:
+    def __init__(self, filename):
+        self.romdata = open(f"c8games/{filename}", "rb").read()
+
+    def load_rom(self):
+        for index in self.romdata:
+            pass
+
+
 class Output:
     def __init__(self):
         self.column = 640
@@ -137,10 +146,7 @@ class Output:
                                      (x, y, 10, 10))
 
     def main(self):
-        self.set_pixel(5, 5)
-        self.set_pixel(500, 500)
-        self.render_pixel()
-        Emulator().interpreter(0x0EE)
+        Rom("INVADERS").load_rom()
 
     def render_pixel(self):
         white = 255, 255, 255
