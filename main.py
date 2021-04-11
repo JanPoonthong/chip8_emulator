@@ -101,9 +101,9 @@ class Rom:
     def __init__(self, filename):
         self.romdata = open(f"c8games/{filename}", "rb").read()
 
-    def load_rom(self):
-        for index in self.romdata:
-            pass
+    def load_rom(self, memory):
+        for index, val in enumerate(self.romdata):
+            memory[0x200 + index] = val
 
 
 class Output:
@@ -146,7 +146,7 @@ class Output:
                                      (x, y, 10, 10))
 
     def main(self):
-        Rom("INVADERS").load_rom()
+        Rom("INVADERS").load_rom(Emulator().memory)
 
     def render_pixel(self):
         white = 255, 255, 255
