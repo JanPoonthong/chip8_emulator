@@ -28,7 +28,7 @@ class Emulator:
             if instruction == 0x0EE:
                 self.program_counter = self.stack.pop()
         if first_hex == 0x1000:
-            pass
+            self.program_counter = instruction & 0xFFF
         if first_hex == 0x2000:
             self.stack.append(self.program_counter)
             self.program_counter = instruction & 0xFFF
@@ -50,7 +50,31 @@ class Emulator:
             if last_hex == 0x0:
                 self.register[x] = self.register[y]
             if last_hex == 0x1:
+                self.register[x] = self.register[x] | self.register[y]
+            if last_hex == 0x2:
+                self.register[x] = self.register[x] & self.register[y]
+            if last_hex == 0x3:
+                self.register[x] = self.register[x] ^ self.register[y]
+            if last_hex == 0x4:
+                # TODO(jan): set VF = carry
+                self.register[x] += self.register[y]
+            if last_hex == 0x5:
+                # TODO(jan): set VF = NOT borrow
+                self.register[x] -= self.register[y]
+            if last_hex == 0x6:
                 pass
+            if last_hex == 0x7:
+                pass
+            if last_hex == 0x8:
+                self.register[x] >>= 1
+                least_significant_bit = self.register[x] & -self.register[x]
+                if least_significant_bit == 1:
+                    # TODO(jan): VF is set to 1
+                    pass
+                else:
+                    # TODO(jan): VF is set to 0
+                    pass
+                self.register[x] /= 2
 
 
 class Input:
