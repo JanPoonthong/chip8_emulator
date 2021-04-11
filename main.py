@@ -1,5 +1,6 @@
 import pygame
 import sys
+import random
 
 pygame.init()
 SCREEN = pygame.display.set_mode((640, 320))
@@ -63,18 +64,32 @@ class Emulator:
                 self.register[x] -= self.register[y]
             if last_hex == 0x6:
                 self.register[x] >>= 1
-                least_significant_bit = self.register[x] & -self.register[x]
-                if least_significant_bit == 1:
+                # TODO(jan): least-significant
+            if last_hex == 0x7:
+                self.register[x] = self.register[y] - self.register[x]
+                if self.register[y] > self.register[x]:
                     # TODO(jan): VF is set to 1
                     pass
                 else:
                     # TODO(jan): VF is set to 0
                     pass
-                self.register[x] /= 2
-            if last_hex == 0x7:
-                pass
-            if last_hex == 0x8:
-                pass
+                self.register[x] -= self.register[y]
+            if last_hex == 0xE:
+                self.register[x] <<= 1
+                # TODO(jan): most-significant
+                self.register[x] *= 2
+        if first_hex == 0x9000:
+            if self.register[x] != self.register[y]:
+                self.program_counter += 2
+        if first_hex == 0xA000:
+            self.index = instruction & 0xFFF
+        if first_hex == 0xB000:
+            self.program_counter = (instruction & 0xFFF) + self.register[0]
+        if first_hex == 0xC000:
+            random_bytes = random.randint(0, 255)
+            self.register[y] = random_bytes & 0xFF
+        if first_hex == 0xD000:
+            pass
 
 
 class Input:
