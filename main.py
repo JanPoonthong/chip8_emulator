@@ -27,6 +27,30 @@ class Emulator:
                 Output().clear()
             if instruction == 0x0EE:
                 self.program_counter = self.stack.pop()
+        if first_hex == 0x1000:
+            pass
+        if first_hex == 0x2000:
+            self.stack.append(self.program_counter)
+            self.program_counter = instruction & 0xFFF
+        if first_hex == 0x3000:
+            if self.register[x] == instruction & 0xFF:
+                self.program_counter += 2
+        if first_hex == 0x4000:
+            if self.register[x] != instruction & 0xFF:
+                self.program_counter += 2
+        if first_hex == 0x5000:
+            if self.register[x] == self.register[y]:
+                self.program_counter += 2
+        if first_hex == 0x6000:
+            self.register[x] = instruction & 0xFF
+        if first_hex == 0x7000:
+            self.register[x] += instruction & 0xFF
+        if first_hex == 0x8000:
+            last_hex = instruction & 0xF
+            if last_hex == 0x0:
+                self.register[x] = self.register[y]
+            if last_hex == 0x1:
+                pass
 
 
 class Input:
