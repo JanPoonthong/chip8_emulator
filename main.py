@@ -1,6 +1,7 @@
-import pygame
-import sys
 import random
+import sys
+
+import pygame
 
 pygame.init()
 SCREEN = pygame.display.set_mode((640, 320))
@@ -113,9 +114,10 @@ class Rom:
         self.pause = False
         self.speed = 10
 
-    def load_rom(self, filename, memory, offset):
-        romdata = open(f"c8games/{filename}", "rb").read()
-        for index, val in enumerate(romdata):
+    @staticmethod
+    def load_rom(filename, memory, offset):
+        rom_data = open(f"c8games/{filename}", "rb").read()
+        for index, val in enumerate(rom_data):
             memory[offset + index] = val
 
 
@@ -147,7 +149,8 @@ class Output:
         self.display[x + (y * self.column)] = 1
         return self.display[x + (y * self.column)]
 
-    def clear(self):
+    @staticmethod
+    def clear():
         black = 0, 0, 0
         SCREEN.fill(black)
 
@@ -158,18 +161,21 @@ class Output:
                     pygame.draw.rect(SCREEN, color,
                                      (x, y, 10, 10))
 
-    def main(self):
-        Rom().load_rom("INVADERS", Emulator().memory, 0)
+    @staticmethod
+    def main():
+        emulator = Emulator()
+        Rom().load_rom("INVADERS", emulator.memory, 0)
 
         while True:
-            Emulator().execute_instruction()
+            emulator.execute_instruction()
             Output().pygame_display_screen()
 
     def render_pixel(self):
         white = 255, 255, 255
         self.drawing_pixel(white)
 
-    def pygame_display_screen(self):
+    @staticmethod
+    def pygame_display_screen():
         pygame.time.Clock().tick(15)
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
