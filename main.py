@@ -15,22 +15,17 @@ class Emulator:
         self.program_counter = 0x200
         self.index = 0
         self.stack = []
-        self.memory = bytearray(4096)
-        self.operand = 0
+        self.memory = [0] * 4096
 
-    def execute_instruction(self, operand=None):
-        if operand:
-            self.operand = operand
-        else:
-            self.operand = int(self.memory[self.program_counter])
-            self.operand = self.operand << 8
-            self.operand += int(self.memory[self.program_counter + 1])
-            self.program_counter += 2
-        self.interpreter(self.operand)
-        return self.operand
+    def execute_instruction(self):
+        operand = int(self.memory[self.program_counter])
+        operand = operand << 8
+        operand += int(self.memory[self.program_counter + 1])
+        self.program_counter += 2
+        self.interpreter(operand)
+        return operand
 
     def interpreter(self, instruction):
-        self.program_counter += 2
         x = (instruction & 0x0F00) >> 8
         y = (instruction & 0x00F0) >> 4
 
