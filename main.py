@@ -30,11 +30,14 @@ class Emulator:
         y = (instruction & 0x00F0) >> 4
 
         first_hex = instruction & 0xF000
-        last_two_hex = instruction & 0x00E0
+        last_two_hex = instruction & 0x00FF
+        last_hex = instruction & 0xF
+
         if last_two_hex == 0x00E0:
             Output().clear()
-        if last_two_hex == 0x0EE:
+        if last_two_hex == 0x00EE:
             self.program_counter = self.stack.pop()
+
         if first_hex == 0x1000:
             self.program_counter = instruction & 0xFFF
         if first_hex == 0x2000:
