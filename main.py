@@ -111,7 +111,7 @@ class Rom:
 
     @staticmethod
     def load_rom(filename, memory, offset):
-        rom_data = open(f"c8games/{filename}", "rb").read()
+        rom_data = open(f"roms/{filename}", "rb").read()
         for index, val in enumerate(rom_data):
             memory[offset + index] = val
 
@@ -159,7 +159,7 @@ class Output:
     @staticmethod
     def main():
         emulator = Emulator()
-        Rom().load_rom("INVADERS", emulator.memory, 0)
+        Rom().load_rom("PICTURE", emulator.memory, 0x200)
 
         while True:
             emulator.execute_instruction()
