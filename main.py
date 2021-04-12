@@ -12,9 +12,9 @@ class Emulator:
         self.register = [0] * 16
         self.sound_timer = 0
         self.delay_timer = 0
-        self.program_counter = 0x200
+        self.program_counter = 0x200  # 512
         self.index = 0
-        self.stack = []
+        self.stack = 0x52  # 82
         self.memory = [0] * 4096
 
     def execute_instruction(self):
