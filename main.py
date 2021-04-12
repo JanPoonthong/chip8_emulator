@@ -8,14 +8,25 @@ SCREEN = pygame.display.set_mode((640, 320))
 
 class Emulator:
     def __init__(self):
-        self.memory = [0] * 4096
         self.register = [0] * 16
         self.sound_timer = 0
         self.delay_timer = 0
-        self.program_counter = 0
+        self.program_counter = 0x200
         self.index = 0
         self.stack = []
-        self.speed = 10
+        self.memory = bytearray(4096)
+        self.operand = 0
+
+    def execute_instruction(self, operand=None):
+        if operand:
+            self.operand = operand
+        else:
+            self.operand = int(self.memory[self.program_counter])
+            self.operand = self.operand << 8
+            self.operand += int(self.memory[self.program_counter + 1])
+            self.program_counter += 2
+        self.interpreter(self.operand)
+        return self.operand
 
     def interpreter(self, instruction):
         self.program_counter += 2
@@ -98,12 +109,14 @@ class Input:
 
 
 class Rom:
-    def __init__(self, filename):
-        self.romdata = open(f"c8games/{filename}", "rb").read()
+    def __init__(self):
+        self.pause = False
+        self.speed = 10
 
-    def load_rom(self, memory):
-        for index, val in enumerate(self.romdata):
-            memory[0x200 + index] = val
+    def load_rom(self, filename, memory, offset):
+        romdata = open(f"c8games/{filename}", "rb").read()
+        for index, val in enumerate(romdata):
+            memory[offset + index] = val
 
 
 class Output:
@@ -146,7 +159,11 @@ class Output:
                                      (x, y, 10, 10))
 
     def main(self):
-        Rom("INVADERS").load_rom(Emulator().memory)
+        Rom().load_rom("INVADERS", Emulator().memory, 0)
+
+        while True:
+            Emulator().execute_instruction()
+            Output().pygame_display_screen()
 
     def render_pixel(self):
         white = 255, 255, 255
@@ -154,12 +171,10 @@ class Output:
 
     def pygame_display_screen(self):
         pygame.time.Clock().tick(15)
-        self.main()
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 sys.exit()
         pygame.display.update()
 
 
-while True:
-    Output().pygame_display_screen()
+Output().main()
