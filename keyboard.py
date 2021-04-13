@@ -26,5 +26,7 @@ class Keyboard:
 
     def listener(self, event):
         if event.type == pygame.KEYDOWN:
-            if event.key == self.key_map.keys():
+            if event.key in self.key_map.keys():
                 print(event.unicode)
+            else:
+                print("Invalid key")
