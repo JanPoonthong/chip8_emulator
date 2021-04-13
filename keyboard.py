@@ -24,7 +24,7 @@ class Keyboard:
         self.key_pressed = pygame.key.get_pressed()
         self.on_next_key_press = None
 
-    @staticmethod
-    def listener(event):
+    def listener(self, event):
         if event.type == pygame.KEYDOWN:
-            print(event.key, event.unicode)
+            if event.key == self.key_map.keys():
+                print(event.unicode)
