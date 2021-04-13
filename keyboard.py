@@ -3,7 +3,7 @@ import pygame
 
 class Keyboard:
     def __init__(self):
-        self.keymap = {
+        self.key_map = {
             0x1: pygame.K_1,  # 1
             0x2: pygame.K_2,  # 2
             0x3: pygame.K_3,  # 3
@@ -24,6 +24,7 @@ class Keyboard:
         self.key_pressed = pygame.key.get_pressed()
         self.on_next_key_press = None
 
-    def listener(self, event):
+    @staticmethod
+    def listener(event):
         if event.type == pygame.KEYDOWN:
             print(event.key, event.unicode)
