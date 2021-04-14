@@ -44,8 +44,9 @@ class Renderer:
 
             if self.display[i] == 1:
                 white = 255, 255, 255
-                pygame.draw.rect(self.screen, white, (x, y,
-                                                      self.scale, self.scale))
+                pygame.draw.rect(
+                    self.screen, white, (x, y, self.scale, self.scale)
+                )
 
     def main(self):
         self.set_pixel(5, 5)

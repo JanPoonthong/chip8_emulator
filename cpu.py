@@ -15,4 +15,3 @@ class Cpu:
         rom_data = open(f"roms/{filename}", "rb").read()
         for index, val in enumerate(rom_data):
             memory[offset + index] = val
-
