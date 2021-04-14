@@ -3,9 +3,9 @@ import sys
 
 import pygame
 
+from cpu import Cpu
 from keyboard import Keyboard
 from renderer import Renderer
-from cpu import Cpu
 
 renderer = Renderer(scale=25)
 keyboard = Keyboard()
@@ -30,6 +30,7 @@ def step(then):
 def main():
     init()
     cpu.load_sprites_into_memory()
+    cpu.load_rom("PICTURE")
     while True:
         pygame_screen()
 
