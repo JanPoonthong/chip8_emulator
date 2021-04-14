@@ -21,7 +21,7 @@ class Keyboard:
             pygame.K_c: 0xB,  # C
             pygame.K_v: 0xF   # V
         }
-        self.key_pressed = pygame.key.get_pressed()
+        self.key_pressed = [0] * 16
         self.on_next_key_press = None
 
     def listener(self, event):
