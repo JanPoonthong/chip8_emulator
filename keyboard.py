@@ -24,9 +24,16 @@ class Keyboard:
         self.key_pressed = [0] * 16
         self.on_next_key_press = None
 
-    def listener(self, event):
-        if event.type == pygame.KEYDOWN:
-            if event.key in self.key_map.keys():
-                print(event.unicode)
-            else:
-                print("Invalid key")
+    def pygame_keydown(self, event):
+        if event.key in self.key_map.keys():
+            key = self.key_map[event.key]
+            self.key_pressed[key] = True
+        else:
+            print("Invalid key")
+
+    def pygame_keyup(self, event):
+        if event.key in self.key_map.keys():
+            print("Key up")
+
+    def is_key_pressed(self, key_code):
+        return self.key_pressed[key_code]
