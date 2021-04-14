@@ -36,7 +36,10 @@ def pygame_screen():
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             sys.exit()
-        keyboard.listener(event)
+        if event.type == pygame.KEYDOWN:
+            keyboard.pygame_keydown(event)
+        if event.type == pygame.KEYUP:
+            keyboard.pygame_keyup(event)
     pygame.display.update()
 
 
