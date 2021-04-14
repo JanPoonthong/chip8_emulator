@@ -28,12 +28,11 @@ class Keyboard:
         if event.key in self.key_map.keys():
             key = self.key_map[event.key]
             self.key_pressed[key] = True
-        else:
-            print("Invalid key")
 
     def pygame_keyup(self, event):
         if event.key in self.key_map.keys():
-            print("Key up")
+            key = self.key_map[event.key]
+            self.key_pressed[key] = False
 
     def is_key_pressed(self, key_code):
         return self.key_pressed[key_code]
