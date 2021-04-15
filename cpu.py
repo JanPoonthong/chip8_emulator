@@ -51,3 +51,9 @@ class Cpu:
 
         self.play_sound()
         self.renderer.render()
+
+    def execute_instruction(self, opcode):
+        self.pc += 2
+
+        x = (opcode & 0x0F00) >> 8
+        y = (opcode & 0x00F0) >> 4
