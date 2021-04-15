@@ -39,3 +39,15 @@ class Cpu:
         rom_data = open(f"roms/{filename}", "rb").read()
         for index, value in enumerate(rom_data):
             self.memory[0x200 + index] = value
+
+    def cycle(self):
+        for i in range(self.speed):
+            if not self.pause:
+                opcode = self.memory[self.pc] << 8 | self.memory[self.pc + 1]
+                self.execute_instruction(opcode)
+
+        if not self.pause:
+            self.update_timers()
+
+        self.play_sound()
+        self.renderer.render()
