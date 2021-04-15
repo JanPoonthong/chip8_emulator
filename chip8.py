@@ -15,7 +15,6 @@ cpu = Cpu(renderer, keyboard)
 def init():
     then = datetime.datetime.now()
     step(then)
-    renderer.main()
 
 
 def step(then):
@@ -31,6 +30,7 @@ def main():
     init()
     cpu.load_sprites_into_memory()
     cpu.load_rom("PICTURE")
+    cpu.cycle()
     while True:
         pygame_screen()
 

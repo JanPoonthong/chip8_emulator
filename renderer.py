@@ -47,8 +47,3 @@ class Renderer:
                 pygame.draw.rect(
                     self.screen, white, (x, y, self.scale, self.scale)
                 )
-
-    def main(self):
-        self.set_pixel(5, 5)
-        self.set_pixel(10, 10)
-        self.render()
