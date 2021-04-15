@@ -52,6 +52,16 @@ class Cpu:
         self.play_sound()
         self.renderer.render()
 
+    def update_timers(self):
+        if self.delay_timer > 0:
+            self.delay_timer -= 1
+        elif self.sound_timer > 0:
+            self.sound_timer -= 1
+
+    def play_sound(self):
+        # TODO(jan): Implement this funciton
+        pass
+
     def execute_instruction(self, opcode):
         self.pc += 2
 
