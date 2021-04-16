@@ -32,7 +32,7 @@ class Cpu:
             0xF0, 0x80, 0x80, 0x80, 0xF0,  # C
             0xE0, 0x90, 0x90, 0x90, 0xE0,  # D
             0xF0, 0x80, 0xF0, 0x80, 0xF0,  # E
-            0xF0, 0x80, 0xF0, 0x80, 0x80,  # F
+            0xF0, 0x80, 0xF0, 0x80, 0x80   # F
         ]
 
         for i in range(len(sprites)):
@@ -177,10 +177,14 @@ class Cpu:
             if last_two_hex == 0x33:
                 self.memory[self.i] = self.v[x] // 100
                 self.memory[self.i + 1] = (self.v[x] % 100) // 10
-                self.memory[self.i  + 2] = self.v[x] % 10
+                self.memory[self.i + 2] = self.v[x] % 10
             if last_two_hex == 0x55:
                 for register_index in range(x):
-                    self.memory[self.i + register_index] = self.v[register_index]
+                    self.memory[self.i + register_index] = self.v[
+                        register_index
+                    ]
             if last_two_hex == 0x65:
                 for register_index in range(x):
-                    self.v[register_index] = self.memory[self.i + register_index]
+                    self.v[register_index] = self.memory[
+                        self.i + register_index
+                    ]
