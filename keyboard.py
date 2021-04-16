@@ -22,7 +22,6 @@ class Keyboard:
             pygame.K_v: 0xF,  # V
         }
         self.key_pressed = [0] * 16
-        self.on_next_key_press = None
 
     def pygame_key_down(self, event):
         if event.key in self.key_map.keys():
