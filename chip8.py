@@ -7,7 +7,7 @@ from cpu import Cpu
 from keyboard import Keyboard
 from renderer import Renderer
 
-renderer = Renderer(scale=25)
+renderer = Renderer(scale=20)
 keyboard = Keyboard()
 cpu = Cpu(renderer, keyboard)
 
@@ -41,9 +41,9 @@ def pygame_screen():
         if event.type == pygame.QUIT:
             sys.exit()
         if event.type == pygame.KEYDOWN:
-            keyboard.pygame_keydown(event)
+            keyboard.pygame_key_down(event)
         if event.type == pygame.KEYUP:
-            keyboard.pygame_keyup(event)
+            keyboard.pygame_key_up(event)
     pygame.display.update()
 
 
