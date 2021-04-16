@@ -32,7 +32,7 @@ class Cpu:
             0xF0, 0x80, 0x80, 0x80, 0xF0,  # C
             0xE0, 0x90, 0x90, 0x90, 0xE0,  # D
             0xF0, 0x80, 0xF0, 0x80, 0xF0,  # E
-            0xF0, 0x80, 0xF0, 0x80, 0x80   # F
+            0xF0, 0x80, 0xF0, 0x80, 0x80,  # F
         ]
 
         for i in range(len(sprites)):
@@ -62,7 +62,7 @@ class Cpu:
             self.sound_timer -= 1
 
     def play_sound(self):
-        # TODO(jan): Implement this funciton
+        # TODO(jan): Implement this function
         pass
 
     def execute_instruction(self, opcode):
@@ -140,27 +140,41 @@ class Cpu:
             random_number = random.randint(0x0, 0xFF)
             self.v[x] = random_number & (opcode & 0xFF)
         if first_hex == 0xD000:
-            pass
+            width = 8
+            height = opcode & 0xF
+            self.v[0xF] = 0
+
+            for row in range(height):
+                sprite = self.memory[self.i + row]
+                for col in range(width):
+                    if (sprite & 0x80) > 0:
+                        if self.renderer.set_pixel(
+                            self.v[x] + col, self.v[y] + row
+                        ):
+                            self.v[0xF] = 1
+                    sprite <<= 1
         if first_hex == 0xE000:
-            last_two_hex =  opcode & 0xFF
+            last_two_hex = opcode & 0xFF
             if last_two_hex == 0x9E:
-                pass
+                if self.keyboard.is_key_pressed(self.v[x]):
+                    self.pc += 2
             if last_two_hex == 0xA1:
-                pass
+                if not self.keyboard.is_key_pressed(self.v[x]):
+                    self.pc += 2
         if first_hex == 0xF000:
-            last_two_hex =  opcode & 0xFF
+            last_two_hex = opcode & 0xFF
             if last_two_hex == 0x07:
-                pass
+                self.v[x] = self.delay_timer
             if last_two_hex == 0x0A:
                 pass
             if last_two_hex == 0x15:
-                pass
+                self.delay_timer = self.v[x]
             if last_two_hex == 0x18:
-                pass
+                self.sound_timer = self.v[x]
             if last_two_hex == 0x1E:
-                pass
+                self.i += self.v[x]
             if last_two_hex == 0x29:
-                pass
+                self.i = self.v[x] * 5
             if last_two_hex == 0x33:
                 pass
             if last_two_hex == 0x55:
