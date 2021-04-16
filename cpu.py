@@ -1,3 +1,6 @@
+import random
+
+
 class Cpu:
     def __init__(self, renderer, keyboard):
         self.renderer = renderer
@@ -67,3 +70,100 @@ class Cpu:
 
         x = (opcode & 0x0F00) >> 8
         y = (opcode & 0x00F0) >> 4
+        print(hex(opcode))
+
+        first_hex = opcode & 0xF000
+        if first_hex == 0x0000:
+            if opcode == 0x00E0:
+                self.renderer.clear()
+            if opcode == 0x00EE:
+                self.pc = self.stack.pop()
+        if first_hex == 0x1000:
+            self.pc = opcode & 0xFFF
+        if first_hex == 0x2000:
+            self.stack.append(self.pc)
+            self.pc = opcode & 0xFFF
+        if first_hex == 0x3000:
+            if self.v[x] == opcode & 0xFF:
+                self.pc += 2
+        if first_hex == 0x4000:
+            if self.v[x] != opcode & 0xFF:
+                self.pc += 2
+        if first_hex == 0x5000:
+            if self.v[x] == self.v[y]:
+                self.pc += 2
+        if first_hex == 0x6000:
+            self.v[x] = opcode & 0xFF
+        if first_hex == 0x7000:
+            self.v[x] += opcode & 0xFF
+        if first_hex == 0x8000:
+            last_hex = opcode & 0xF
+            if last_hex == 0x0:
+                self.v[x] = self.v[y]
+            if last_hex == 0x1:
+                self.v[x] |= self.v[y]
+            if last_hex == 0x2:
+                self.v[x] &= self.v[y]
+            if last_hex == 0x3:
+                self.v[x] ^= self.v[y]
+            if last_hex == 0x4:
+                # TODO(jan): Something might be wrong here
+                total = self.v[x] + self.v[y]
+                self.v[0xF] = 0
+                if total > 0xFF:
+                    self.v[0xF] = 1
+                self.v[x] = total
+            if last_hex == 0x5:
+                self.v[0xF] = 0
+                if self.v[x] > self.v[y]:
+                    self.v[0xF] = 1
+                self.v[x] -= self.v[y]
+            if last_hex == 0x6:
+                self.v[0xF] = self.v[x] & 0x1
+                self.v[x] >>= 1
+            if last_hex == 0x7:
+                self.v[0xF] = 0
+                if self.v[y] > self.v[x]:
+                    self.v[0xF] = 1
+                self.v[x] = self.v[y] - self.v[x]
+            if last_hex == 0xE:
+                self.v[0xF] = self.v[x] & 0x80
+                self.v[x] <<= 1
+        if first_hex == 0x9000:
+            if self.v[x] != self.v[y]:
+                self.pc += 2
+        if first_hex == 0xA000:
+            self.i = opcode & 0xFFF
+        if first_hex == 0xB000:
+            self.pc = (opcode & 0xFFF) + self.v[0]
+        if first_hex == 0xC000:
+            random_number = random.randint(0x0, 0xFF)
+            self.v[x] = random_number & (opcode & 0xFF)
+        if first_hex == 0xD000:
+            pass
+        if first_hex == 0xE000:
+            last_two_hex =  opcode & 0xFF
+            if last_two_hex == 0x9E:
+                pass
+            if last_two_hex == 0xA1:
+                pass
+        if first_hex == 0xF000:
+            last_two_hex =  opcode & 0xFF
+            if last_two_hex == 0x07:
+                pass
+            if last_two_hex == 0x0A:
+                pass
+            if last_two_hex == 0x15:
+                pass
+            if last_two_hex == 0x18:
+                pass
+            if last_two_hex == 0x1E:
+                pass
+            if last_two_hex == 0x29:
+                pass
+            if last_two_hex == 0x33:
+                pass
+            if last_two_hex == 0x55:
+                pass
+            if last_two_hex == 0x65:
+                pass
