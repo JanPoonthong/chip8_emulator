@@ -38,6 +38,7 @@ class Renderer:
         self.display = [0] * (self.cols * self.rows)
 
     def render(self):
+        self.screen.fill((0, 0, 0))
         for i in range(self.cols * self.rows):
             x = (i % self.cols) * self.scale
             y = (i // self.cols) * self.scale
