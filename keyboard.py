@@ -24,12 +24,12 @@ class Keyboard:
         self.key_pressed = [0] * 16
         self.on_next_key_press = None
 
-    def pygame_keydown(self, event):
+    def pygame_key_down(self, event):
         if event.key in self.key_map.keys():
             key = self.key_map[event.key]
             self.key_pressed[key] = True
 
-    def pygame_keyup(self, event):
+    def pygame_key_up(self, event):
         if event.key in self.key_map.keys():
             key = self.key_map[event.key]
             self.key_pressed[key] = False
