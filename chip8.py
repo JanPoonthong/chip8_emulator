@@ -12,26 +12,11 @@ keyboard = Keyboard()
 cpu = Cpu(renderer, keyboard)
 
 
-def init():
-    then = datetime.datetime.now()
-    step(then)
-
-
-def step(then):
-    now = datetime.datetime.now()
-    fps = 1000 / 60
-    elapsed = now - then
-    # TODO(jan): Fix elapsed
-    # if elapsed > fps:
-    #     pass
-
-
 def main():
-    init()
     cpu.load_sprites_into_memory()
-    cpu.load_rom("PICTURE")
-    cpu.cycle()
+    cpu.load_rom("PONG")
     while True:
+        cpu.cycle()
         pygame_screen()
 
 
