@@ -39,7 +39,7 @@ class Cpu:
             self.memory[i] = sprites[i]
 
     def load_rom(self, filename):
-        rom_data = open(f"roms/{filename}", "rb").read()
+        rom_data = open(f"c8games/{filename}", "rb").read()
         for index, value in enumerate(rom_data):
             self.memory[0x200 + index] = value
 
@@ -67,12 +67,10 @@ class Cpu:
 
     def execute_instruction(self, opcode):
         self.pc += 2
-
         x = (opcode & 0x0F00) >> 8
         y = (opcode & 0x00F0) >> 4
-        print(hex(opcode))
-
         first_hex = opcode & 0xF000
+
         if first_hex == 0x0000:
             if opcode == 0x00E0:
                 self.renderer.clear()
@@ -166,6 +164,7 @@ class Cpu:
             if last_two_hex == 0x07:
                 self.v[x] = self.delay_timer
             if last_two_hex == 0x0A:
+                # TODO(jan): Need to implement
                 pass
             if last_two_hex == 0x15:
                 self.delay_timer = self.v[x]
@@ -176,8 +175,12 @@ class Cpu:
             if last_two_hex == 0x29:
                 self.i = self.v[x] * 5
             if last_two_hex == 0x33:
-                pass
+                self.memory[self.i] = self.v[x] // 100
+                self.memory[self.i + 1] = (self.v[x] % 100) // 10
+                self.memory[self.i  + 2] = self.v[x] % 10
             if last_two_hex == 0x55:
-                pass
+                for register_index in range(x):
+                    self.memory[self.i + register_index] = self.v[register_index]
             if last_two_hex == 0x65:
-                pass
+                for register_index in range(x):
+                    self.v[register_index] = self.memory[self.i + register_index]
