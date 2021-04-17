@@ -20,12 +20,12 @@ class Renderer:
         :return: returns True, a pixel was erased. If returns False, nothing was
         erased.
         """
-        if x > self.cols:
+        if x >= self.cols:
             x -= self.cols
         elif x < 0:
             x += self.cols
 
-        if y > self.rows:
+        if y >= self.rows:
             y -= self.rows
         elif y < 0:
             y += self.rows
