@@ -61,10 +61,6 @@ class Cpu:
         elif self.sound_timer > 0:
             self.sound_timer -= 1
 
-    def play_sound(self):
-        # TODO(jan): Implement this function
-        pass
-
     def execute_instruction(self, opcode):
         self.pc += 2
         x = (opcode & 0x0F00) >> 8
