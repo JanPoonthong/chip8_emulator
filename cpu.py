@@ -52,7 +52,6 @@ class Cpu:
         if not self.pause:
             self.update_timers()
 
-        self.play_sound()
         self.renderer.render()
 
     def update_timers(self):
