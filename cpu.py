@@ -105,7 +105,6 @@ class Cpu:
             if last_hex == 0x3:
                 self.v[x] ^= self.v[y]
             if last_hex == 0x4:
-                # TODO(jan): Something might be wrong here
                 total = self.v[x] + self.v[y]
                 self.v[0xF] = 0
                 if total > 0xFF:
@@ -165,8 +164,10 @@ class Cpu:
             if last_two_hex == 0x07:
                 self.v[x] = self.delay_timer
             if last_two_hex == 0x0A:
-                # TODO(jan): Need to implement
-                pass
+                self.pause = True
+                if self.keyboard.pygame_key_down:
+                    self.pc -= 2
+                    self.pause = False
             if last_two_hex == 0x15:
                 self.delay_timer = self.v[x]
             if last_two_hex == 0x18:
