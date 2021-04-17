@@ -38,10 +38,10 @@ class Cpu:
         for i in range(len(sprites)):
             self.memory[i] = sprites[i]
 
-    def load_rom(self, filename):
+    def load_rom(self, filename, offset):
         rom_data = open(f"c8games/{filename}", "rb").read()
         for index, value in enumerate(rom_data):
-            self.memory[0x200 + index] = value
+            self.memory[offset + index] = value
 
     def cycle(self):
         for i in range(self.speed):
@@ -138,6 +138,7 @@ class Cpu:
             random_number = random.randint(0x0, 0xFF)
             self.v[x] = random_number & (opcode & 0xFF)
         if first_hex == 0xD000:
+            # Width of the sprite are 8 pixels wide, so it's safe to hardcode
             width = 8
             height = opcode & 0xF
             self.v[0xF] = 0
@@ -145,7 +146,7 @@ class Cpu:
             for row in range(height):
                 sprite = self.memory[self.i + row]
                 for col in range(width):
-                    if (sprite & 0x80) > 0:
+                    if (sprite & 0x80) > 0x0:
                         if self.renderer.set_pixel(
                             self.v[x] + col, self.v[y] + row
                         ):

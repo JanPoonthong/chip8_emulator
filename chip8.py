@@ -13,7 +13,7 @@ cpu = Cpu(renderer, keyboard)
 
 def main():
     cpu.load_sprites_into_memory()
-    cpu.load_rom("PONG")
+    cpu.load_rom("PONG", 0x200)
     while True:
         cpu.cycle()
         pygame_screen()
