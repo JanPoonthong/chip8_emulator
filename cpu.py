@@ -103,6 +103,7 @@ class Cpu:
                 self.v[x] ^= self.v[y]
             if last_hex == 0x4:
                 # TODO(jan): Not sure if this is right or wrong
+                total = self.v[x] + self.v[y]
                 self.v[0xF] = 0
                 if total > 0xFF:
                     self.v[0xF] = 1
@@ -122,9 +123,9 @@ class Cpu:
                     self.v[0xF] = 1
                 self.v[x] = self.v[y] - self.v[x]
             if last_hex == 0xE:
+                # TODO(jan): Seems wrong
                 self.v[0xF] = self.v[x] & 0x80
                 self.v[x] <<= 1
-                # TODO(jan): Seems wrong
         if first_hex == 0x9000:
             if self.v[x] != self.v[y]:
                 self.pc += 2

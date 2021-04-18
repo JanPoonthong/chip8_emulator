@@ -20,7 +20,7 @@ def main():
 
 
 def pygame_screen():
-    pygame.time.Clock().tick(60)
+    pygame.time.Clock().tick(90)
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             sys.exit()
