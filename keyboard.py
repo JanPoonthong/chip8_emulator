@@ -27,6 +27,7 @@ class Keyboard:
         if event.key in self.key_map.keys():
             key = self.key_map[event.key]
             self.key_pressed[key] = True
+            return key
 
     def pygame_key_up(self, event):
         if event.key in self.key_map.keys():

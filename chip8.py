@@ -6,14 +6,14 @@ from cpu import Cpu
 from keyboard import Keyboard
 from renderer import Renderer
 
-renderer = Renderer(scale=20)
+renderer = Renderer(scale=15)
 keyboard = Keyboard()
 cpu = Cpu(renderer, keyboard)
 
 
 def main():
     cpu.load_sprites_into_memory()
-    cpu.load_rom("PONG", 0x200)
+    cpu.load_rom("PONG2", 0x200)
     while True:
         cpu.cycle()
         pygame_screen()

@@ -32,7 +32,7 @@ class Cpu:
             0xF0, 0x80, 0x80, 0x80, 0xF0,  # C
             0xE0, 0x90, 0x90, 0x90, 0xE0,  # D
             0xF0, 0x80, 0xF0, 0x80, 0xF0,  # E
-            0xF0, 0x80, 0xF0, 0x80, 0x80,  # F
+            0xF0, 0x80, 0xF0, 0x80, 0x80   # F
         ]
 
         for i in range(len(sprites)):
@@ -68,14 +68,14 @@ class Cpu:
         last_two_hex = opcode & 0x00FF
 
         if first_hex == 0x0000:
-            if last_two_hex == 0x00E0:
+            if opcode == 0x00E0:
                 self.renderer.clear()
-            if last_two_hex == 0x00EE:
+            if opcode == 0x00EE:
                 self.pc = self.stack.pop()
         if first_hex == 0x1000:
             self.pc = opcode & 0x0FFF
         if first_hex == 0x2000:
-            # TODO(jan): Score need to fix
+            # TODO(jan): This matter, not sure, matter
             self.stack.append(self.pc)
             self.pc = opcode & 0x0FFF
         if first_hex == 0x3000:
@@ -102,8 +102,8 @@ class Cpu:
             if last_hex == 0x3:
                 self.v[x] ^= self.v[y]
             if last_hex == 0x4:
-                # TODO(jan): Not sure if this is right or wrong
-                total = self.v[x] + self.v[y]
+                self.v[x] += self.v[y]
+                total = self.v[x]
                 self.v[0xF] = 0
                 if total > 0xFF:
                     self.v[0xF] = 1
@@ -114,7 +114,6 @@ class Cpu:
                     self.v[0xF] = 1
                 self.v[x] -= self.v[y]
             if last_hex == 0x6:
-                # TODO(jan): Seems wrong
                 self.v[0xF] = self.v[x] & 0x1
                 self.v[x] >>= 1
             if last_hex == 0x7:
@@ -123,7 +122,6 @@ class Cpu:
                     self.v[0xF] = 1
                 self.v[x] = self.v[y] - self.v[x]
             if last_hex == 0xE:
-                # TODO(jan): Seems wrong
                 self.v[0xF] = self.v[x] & 0x80
                 self.v[x] <<= 1
         if first_hex == 0x9000:
@@ -137,7 +135,6 @@ class Cpu:
             random_number = random.randint(0x0, 0xFF)
             self.v[x] = random_number & (opcode & 0x00FF)
         if first_hex == 0xD000:
-            # TODO(jan): Seem wrong
             # Width of the sprite are 8 pixels wide, so it's safe to hardcode
             width = 8
             height = opcode & 0x000F
@@ -146,7 +143,7 @@ class Cpu:
             for row in range(height):
                 sprite = self.memory[self.i + row]
                 for col in range(width):
-                    if (sprite & 0x80) > 0x0:
+                    if (sprite & 0x0080) > 0x0:
                         if self.renderer.set_pixel(
                             self.v[x] + col, self.v[y] + row
                         ):
@@ -163,20 +160,22 @@ class Cpu:
             if last_two_hex == 0x07:
                 self.v[x] = self.delay_timer
             if last_two_hex == 0x0A:
-                # TODO(jan): Seem wrong
                 self.pause = True
-                if self.keyboard.pygame_key_down:
-                    self.pc -= 2
-                    self.pause = False
+                self.v[x] = self.keyboard.pygame_key_down()
+                self.pc -= 2
+                self.pause = False
             if last_two_hex == 0x15:
+                # TODO(jan): This matter, matter
                 self.delay_timer = self.v[x]
             if last_two_hex == 0x18:
                 self.sound_timer = self.v[x]
             if last_two_hex == 0x1E:
                 self.i += self.v[x]
             if last_two_hex == 0x29:
+                # TODO(jan): This matter, matter
                 self.i = self.v[x] * 0x5
             if last_two_hex == 0x33:
+                # TODO(jan): This matter, matters
                 self.memory[self.i] = self.v[x] // 100
                 self.memory[self.i + 1] = (self.v[x] % 100) // 10
                 self.memory[self.i + 2] = self.v[x] % 10
@@ -186,6 +185,7 @@ class Cpu:
                         register_index
                     ]
             if last_two_hex == 0x65:
+                # TODO(jan): This matter, matters
                 for register_index in range(x):
                     self.v[register_index] = self.memory[
                         self.i + register_index
