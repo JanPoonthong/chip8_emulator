@@ -184,8 +184,8 @@ class Cpu:
                     self.memory[self.i + register_index] = self.v[
                         register_index
                     ]
+
             if last_two_hex == 0x65:
-                # TODO(jan): This matter, matters
                 for register_index in range(x):
                     self.v[register_index] = self.memory[
                         self.i + register_index
