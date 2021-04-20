@@ -75,7 +75,6 @@ class Cpu:
         if first_hex == 0x1000:
             self.pc = opcode & 0x0FFF
         if first_hex == 0x2000:
-            # TODO(jan): This matter, not sure, matter
             self.stack.append(self.pc)
             self.pc = opcode & 0x0FFF
         if first_hex == 0x3000:
@@ -165,17 +164,14 @@ class Cpu:
                 self.pc -= 2
                 self.pause = False
             if last_two_hex == 0x15:
-                # TODO(jan): This matter, matter
                 self.delay_timer = self.v[x]
             if last_two_hex == 0x18:
                 self.sound_timer = self.v[x]
             if last_two_hex == 0x1E:
                 self.i += self.v[x]
             if last_two_hex == 0x29:
-                # TODO(jan): This matter, matter
                 self.i = self.v[x] * 0x5
             if last_two_hex == 0x33:
-                # TODO(jan): This matter, matters
                 self.memory[self.i] = self.v[x] // 100
                 self.memory[self.i + 1] = (self.v[x] % 100) // 10
                 self.memory[self.i + 2] = self.v[x] % 10
