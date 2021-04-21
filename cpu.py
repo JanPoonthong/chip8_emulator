@@ -71,8 +71,6 @@ class Cpu:
             if opcode == 0x00E0:
                 self.renderer.clear()
             if opcode == 0x00EE:
-                # TODO(jan): On tutorial project this execute once but mine
-                # execute twitch at a time
                 self.pc = self.stack.pop()
         if first_hex == 0x1000:
             self.pc = opcode & 0x0FFF
@@ -109,6 +107,7 @@ class Cpu:
                 if total > 0xFF:
                     self.v[0xF] = 1
                 self.v[x] = total
+                self.v[x] = total & 0x00FF
             if last_hex == 0x5:
                 self.v[0xF] = 0
                 if self.v[x] > self.v[y]:

@@ -10,7 +10,7 @@ from renderer import Renderer
 
 def main():
     cpu.load_sprites_into_memory()
-    cpu.load_rom("PONG2", 0x200)
+    cpu.load_rom("test_opcode.ch8", 0x200)
     while True:
         cpu.cycle()
         pygame_screen()
