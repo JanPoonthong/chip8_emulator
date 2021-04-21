@@ -183,7 +183,7 @@ class Cpu:
                 self.v[x] = target_reg
             if last_hex == 0x6:
                 self.v[0xf] = self.v[x] & 0x1
-                self.v[y] = self.v[x] >> 1
+                self.v[x] >>= 1
             if last_hex == 0x7:
                 self.v[0xf] = 0
                 if self.v[y] > self.v[x]:
@@ -211,7 +211,9 @@ class Cpu:
                 sprite = self.memory[self.i + row]
                 for col in range(width):
                     if (sprite & 0x0080) > 0x0:
-                        if self.renderer.set_pixel(self.v[x] + col, self.v[y] + row):
+                        if self.renderer.set_pixel(
+                            self.v[x] + col, self.v[y] + row
+                        ):
                             self.v[0xf] = 1
                     sprite <<= 1
         if first_hex == 0xe000:
@@ -239,12 +241,16 @@ class Cpu:
                 self.i = self.v[x] * 0x5
             if last_two_hex == 0x33:
                 self.memory[self.i] = self.v[x] // 100
-                self.memory[self.i + 1] = (self.v[x] % 100) // 10
+                self.memory[self.i + 1] = (self.v[x] // 10) % 10
                 self.memory[self.i + 2] = self.v[x] % 10
             if last_two_hex == 0x55:
                 for register_index in range(x):
-                    self.memory[self.i + register_index] = self.v[register_index]
+                    self.memory[self.i + register_index] = self.v[
+                        register_index
+                    ]
 
             if last_two_hex == 0x65:
                 for register_index in range(x):
-                    self.v[register_index] = self.memory[self.i + register_index]
+                    self.v[register_index] = self.memory[
+                        self.i + register_index
+                    ]
