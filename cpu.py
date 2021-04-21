@@ -71,6 +71,8 @@ class Cpu:
             if opcode == 0x00E0:
                 self.renderer.clear()
             if opcode == 0x00EE:
+                # TODO(jan): On tutorial project this execute once but mine
+                # execute twitch at a time
                 self.pc = self.stack.pop()
         if first_hex == 0x1000:
             self.pc = opcode & 0x0FFF

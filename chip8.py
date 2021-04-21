@@ -1,14 +1,11 @@
 import sys
+import argparse
 
 import pygame
 
 from cpu import Cpu
 from keyboard import Keyboard
 from renderer import Renderer
-
-renderer = Renderer(scale=15)
-keyboard = Keyboard()
-cpu = Cpu(renderer, keyboard)
 
 
 def main():
@@ -31,4 +28,17 @@ def pygame_screen():
     pygame.display.update()
 
 
-main()
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser(description="""Chip-8 is a simple, interpreted,
+    programming language which was first used on some do-it-yourself computer
+    systems.""")
+    parser.add_argument("--scale", type=int, help="number of scale")
+    args = parser.parse_args()
+    number_of_scale = args.scale
+    if len(sys.argv) == 1:
+        parser.print_help()
+        sys.exit()
+    renderer = Renderer(scale=number_of_scale)
+    keyboard = Keyboard()
+    cpu = Cpu(renderer, keyboard)
+    main()
