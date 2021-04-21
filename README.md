@@ -9,4 +9,4 @@ Pong, Space Invaders, Tetris, Pac-Man and many more.
 
 ## Run
 
-  `python3 chip8 --scale <int>`
+  `python3 chip8.py --scale <int>`
