@@ -244,13 +244,12 @@ class Cpu:
                 self.memory[self.i + 1] = (self.v[x] // 10) % 10
                 self.memory[self.i + 2] = self.v[x] % 10
             if last_two_hex == 0x55:
-                for register_index in range(x):
+                for register_index in range(x + 1):
                     self.memory[self.i + register_index] = self.v[
                         register_index
                     ]
-
             if last_two_hex == 0x65:
-                for register_index in range(x):
+                for register_index in range(x + 1):
                     self.v[register_index] = self.memory[
                         self.i + register_index
                     ]
