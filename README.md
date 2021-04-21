@@ -6,3 +6,7 @@ some do-it-yourself computer systems.
 ## Games allow on Chip-8 Emulator
 
 Pong, Space Invaders, Tetris, Pac-Man and many more.
+
+## Run
+
+  `python3 chip8 --scale <int>`
