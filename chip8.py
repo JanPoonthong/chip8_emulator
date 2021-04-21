@@ -9,6 +9,7 @@ from renderer import Renderer
 
 
 def main():
+    pygame.display.set_caption("Chip-8 emulator")
     cpu.load_sprites_into_memory()
     cpu.load_rom("test_opcode.ch8", 0x200)
     while True:
