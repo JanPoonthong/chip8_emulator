@@ -106,7 +106,6 @@ class Cpu:
                 self.v[0xF] = 0
                 if total > 0xFF:
                     self.v[0xF] = 1
-                self.v[x] = total
                 self.v[x] = total & 0x00FF
             if last_hex == 0x5:
                 self.v[0xF] = 0
