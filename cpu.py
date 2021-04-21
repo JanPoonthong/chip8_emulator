@@ -136,8 +136,7 @@ class Cpu:
             random_number = random.randint(0x0, 0xFF)
             self.v[x] = random_number & (opcode & 0x00FF)
         if first_hex == 0xD000:
-            # Width of the sprite are 8 pixels wide, so it's safe to hardcode
-            width = 8
+            width = 8  # 8 pixels wide, so it's safe to hardcode
             height = opcode & 0x000F
             self.v[0xF] = 0
 

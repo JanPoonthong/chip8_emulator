@@ -29,9 +29,11 @@ def pygame_screen():
 
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description="""Chip-8 is a simple, interpreted,
+    parser = argparse.ArgumentParser(
+        description="""Chip-8 is a simple, interpreted,
     programming language which was first used on some do-it-yourself computer
-    systems.""")
+    systems."""
+    )
     parser.add_argument("--scale", type=int, help="number of scale")
     args = parser.parse_args()
     number_of_scale = args.scale
