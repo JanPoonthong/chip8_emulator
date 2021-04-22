@@ -103,7 +103,7 @@ class Cpu:
             self.memory[i] = sprites[i]
 
     def load_rom(self, filename, offset):
-        rom_data = open(f"c8games/{filename}", "rb").read()
+        rom_data = open(f"{filename}", "rb").read()
         for index, value in enumerate(rom_data):
             self.memory[offset + index] = value
 
@@ -228,7 +228,6 @@ class Cpu:
                 self.v[x] = self.delay_timer
             if last_two_hex == 0x0A:
                 self.pause = True
-                self.v[x] = self.keyboard.pygame_key_down()
                 self.pc -= 2
                 self.pause = False
             if last_two_hex == 0x15:

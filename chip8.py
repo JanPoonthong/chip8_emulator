@@ -8,10 +8,9 @@ from keyboard import Keyboard
 from renderer import Renderer
 
 
-def main():
-    pygame.display.set_caption("Chip-8 emulator")
+def main(game_rom):
     cpu.load_sprites_into_memory()
-    cpu.load_rom("test_opcode.ch8", 0x200)
+    cpu.load_rom(f"{game_rom}", 0x200)
     while True:
         cpu.cycle()
         pygame_screen()
@@ -36,12 +35,14 @@ if __name__ == "__main__":
     systems."""
     )
     parser.add_argument("--scale", type=int, help="number of scale")
+    parser.add_argument("rom", help="the ROM file to load on startup")
     args = parser.parse_args()
     number_of_scale = args.scale
+    game_rom = args.rom
     if len(sys.argv) == 1:
         parser.print_help()
         sys.exit()
     renderer = Renderer(scale=number_of_scale)
     keyboard = Keyboard()
     cpu = Cpu(renderer, keyboard)
-    main()
+    main(game_rom)
