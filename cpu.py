@@ -190,8 +190,10 @@ class Cpu:
                     self.v[0xF] = 1
                 self.v[x] = self.v[y] - self.v[x]
             if last_hex == 0xE:
-                self.v[0xF] = self.v[x] & 0x80
-                self.v[x] <<= 1
+                self.v[0xF] = 0
+                if self.v[x] >> 7 == 1:
+                    self.v[0xF] = 1
+                self.v[x] <<= 2
         if first_hex == 0x9000:
             if self.v[x] != self.v[y]:
                 self.pc += 2
