@@ -7,13 +7,14 @@ some do-it-yourself computer systems.
 
 Pong, Space Invaders, Tetris, Pac-Man and many more.
 
+Download [Chip-8 games][c8game]
+
 ## Dowload
 
 Run:
 
 	pip3 install pygame
 
-* Download [Chip-8 games][c8game]
 
 ## Run
 
