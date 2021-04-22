@@ -13,9 +13,7 @@ Run:
 
 	`pip3 install pygame`
 
-Chip-8 emulator:
-
-	Download [Chip-8 games][c8game]
+Download [Chip-8 games][c8game]
 
 ## Run
 
