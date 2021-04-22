@@ -7,6 +7,18 @@ some do-it-yourself computer systems.
 
 Pong, Space Invaders, Tetris, Pac-Man and many more.
 
+## Dowload
+
+Run:
+
+	`pip3 install pygame`
+
+Chip-8 emulator:
+
+	Download [Chip-8 games][c8game]
+
 ## Run
 
-  `python3 chip8.py --scale <int>`
+  `python3 chip8.py --scale <int> <pathtofile>`
+
+[c8game]: https://www.zophar.net/pdroms/chip8/chip-8-games-pack.html
