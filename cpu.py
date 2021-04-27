@@ -62,45 +62,45 @@ class Cpu:
         if first_hex == 0x0000:
             if opcode == 0x00E0:
                 self.renderer.clear()
-            if opcode == 0x00EE:
+            elif opcode == 0x00EE:
                 self.pc = self.stack.pop()
-        if first_hex == 0x1000:
+        elif first_hex == 0x1000:
             self.pc = opcode & 0x0FFF
-        if first_hex == 0x2000:
+        elif first_hex == 0x2000:
             self.stack.append(self.pc)
             self.pc = opcode & 0x0FFF
-        if first_hex == 0x3000:
+        elif first_hex == 0x3000:
             if self.v[x] == opcode & 0x00FF:
                 self.pc += 2
-        if first_hex == 0x4000:
+        elif first_hex == 0x4000:
             if self.v[x] != opcode & 0x00FF:
                 self.pc += 2
-        if first_hex == 0x5000:
+        elif first_hex == 0x5000:
             if self.v[x] == self.v[y]:
                 self.pc += 2
-        if first_hex == 0x6000:
+        elif first_hex == 0x6000:
             self.v[x] = opcode & 0x00FF
-        if first_hex == 0x7000:
+        elif first_hex == 0x7000:
             temp = self.v[x] + (opcode & 0x00FF)
             self.v[x] = temp if temp < 256 else temp - 256
-        if first_hex == 0x8000:
+        elif first_hex == 0x8000:
             last_hex = opcode & 0x000F
             if last_hex == 0x0:
                 self.v[x] = self.v[y]
-            if last_hex == 0x1:
+            elif last_hex == 0x1:
                 self.v[x] |= self.v[y]
-            if last_hex == 0x2:
+            elif last_hex == 0x2:
                 self.v[x] &= self.v[y]
-            if last_hex == 0x3:
+            elif last_hex == 0x3:
                 self.v[x] ^= self.v[y]
-            if last_hex == 0x4:
+            elif last_hex == 0x4:
                 self.v[x] += self.v[y]
                 total = self.v[x]
                 self.v[0xF] = 0
                 if total > 0xFF:
                     self.v[0xF] = 1
                 self.v[x] = total & 0x00FF
-            if last_hex == 0x5:
+            elif last_hex == 0x5:
                 target_reg = self.v[x]
                 if self.v[x] > self.v[y]:
                     target_reg -= self.v[y]
@@ -109,28 +109,28 @@ class Cpu:
                     target_reg = 256 + target_reg - self.v[y]
                     self.v[0xF] = 0
                 self.v[x] = target_reg
-            if last_hex == 0x6:
+            elif last_hex == 0x6:
                 self.v[0xF] = self.v[x] & 0x1
                 self.v[x] >>= 1
-            if last_hex == 0x7:
+            elif last_hex == 0x7:
                 self.v[0xF] = 0
                 if self.v[y] > self.v[x]:
                     self.v[0xF] = 1
                 self.v[x] = self.v[y] - self.v[x]
-            if last_hex == 0xE:
+            elif last_hex == 0xE:
                 self.v[0xF] = self.v[x] & 0x80
                 self.v[x] = self.v[x] * 2 & 0xFF
-        if first_hex == 0x9000:
+        elif first_hex == 0x9000:
             if self.v[x] != self.v[y]:
                 self.pc += 2
-        if first_hex == 0xA000:
+        elif first_hex == 0xA000:
             self.i = opcode & 0x0FFF
-        if first_hex == 0xB000:
+        elif first_hex == 0xB000:
             self.pc = (opcode & 0x0FFF) + self.v[0x0]
-        if first_hex == 0xC000:
+        elif first_hex == 0xC000:
             random_number = random.randint(0x0, 0xFF)
             self.v[x] = random_number & (opcode & 0x00FF)
-        if first_hex == 0xD000:
+        elif first_hex == 0xD000:
             width = 8  # 8 pixels wide, so it's safe to hardcode
             height = opcode & 0x000F
             self.v[0xF] = 0
@@ -144,38 +144,38 @@ class Cpu:
                         ):
                             self.v[0xF] = 1
                     sprite <<= 1
-        if first_hex == 0xE000:
+        elif first_hex == 0xE000:
             if last_two_hex == 0x9E:
                 if self.keyboard.is_key_pressed(self.v[x]):
                     self.pc += 2
-            if last_two_hex == 0xA1:
+            elif last_two_hex == 0xA1:
                 if not self.keyboard.is_key_pressed(self.v[x]):
                     self.pc += 2
-        if first_hex == 0xF000:
+        elif first_hex == 0xF000:
             if last_two_hex == 0x07:
                 self.v[x] = self.delay_timer
-            if last_two_hex == 0x0A:
+            elif last_two_hex == 0x0A:
                 self.pause = True
                 self.pc -= 2
                 self.pause = False
-            if last_two_hex == 0x15:
+            elif last_two_hex == 0x15:
                 self.delay_timer = self.v[x]
-            if last_two_hex == 0x18:
+            elif last_two_hex == 0x18:
                 self.sound_timer = self.v[x]
-            if last_two_hex == 0x1E:
+            elif last_two_hex == 0x1E:
                 self.i += self.v[x]
-            if last_two_hex == 0x29:
+            elif last_two_hex == 0x29:
                 self.i = self.v[x] * 0x5
-            if last_two_hex == 0x33:
+            elif last_two_hex == 0x33:
                 self.memory[self.i] = self.v[x] // 100
                 self.memory[self.i + 1] = (self.v[x] // 10) % 10
                 self.memory[self.i + 2] = self.v[x] % 10
-            if last_two_hex == 0x55:
+            elif last_two_hex == 0x55:
                 for register_index in range(x + 1):
                     self.memory[self.i + register_index] = self.v[
                         register_index
                     ]
-            if last_two_hex == 0x65:
+            elif last_two_hex == 0x65:
                 for register_index in range(x + 1):
                     self.v[register_index] = self.memory[
                         self.i + register_index
