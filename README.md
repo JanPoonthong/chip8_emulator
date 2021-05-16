@@ -3,6 +3,8 @@
 Chip-8 is a simple, interpreted, programming language which was first used on
 some do-it-yourself computer systems.
 
+![Demonstration of chip-8 emulator](demo.gif)
+
 ## Games allow on Chip-8 Emulator
 
 Pong, Space Invaders, Tetris, Pac-Man and many more.
