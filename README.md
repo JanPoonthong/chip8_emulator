@@ -15,10 +15,10 @@ Download [Chip-8 games][c8game]
 
 Run:
 
-    pip3 install pygame
+    $ pip3 install pygame
 
 ## Run
 
-    python3 chip8.py --scale <int> <pathtofile>
+    $ python3 chip8.py --scale <int> <pathtofile>
 
 [c8game]: https://www.zophar.net/pdroms/chip8/chip-8-games-pack.html
