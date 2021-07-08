@@ -8,15 +8,15 @@ from keyboard import Keyboard
 from renderer import Renderer
 
 
-def main(game_rom):
+def main(game_rom, renderer):
     cpu.load_sprites_into_memory()
     cpu.load_rom(f"{game_rom}", 0x200)
     while True:
         cpu.cycle()
-        pygame_screen()
+        pygame_screen(renderer)
 
 
-def pygame_screen():
+def pygame_screen(renderer):
     pygame.time.Clock().tick(90)
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -27,6 +27,8 @@ def pygame_screen():
             keyboard.pygame_key_up(event)
         if event.type == pygame.VIDEORESIZE:
             pygame.display.set_mode((event.w, event.h), pygame.RESIZABLE)
+            renderer.width = event.w
+            renderer.height = event.h
     pygame.display.update()
 
 
@@ -47,4 +49,4 @@ if __name__ == "__main__":
     renderer = Renderer(scale=number_of_scale)
     keyboard = Keyboard()
     cpu = Cpu(renderer, keyboard)
-    main(game_rom)
+    main(game_rom, renderer)
