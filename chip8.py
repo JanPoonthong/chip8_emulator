@@ -27,8 +27,9 @@ def pygame_screen(renderer):
             keyboard.pygame_key_up(event)
         if event.type == pygame.VIDEORESIZE:
             pygame.display.set_mode((event.w, event.h), pygame.RESIZABLE)
-            renderer.width = event.w
-            renderer.height = event.h
+            renderer.width = event.w / renderer.cols
+            renderer.scale = event.h / renderer.rows
+            print(renderer.width, renderer.height)
     pygame.display.update()
 
 
