@@ -11,7 +11,8 @@ class Renderer:
         self.rows = 32
         self.width = self.cols * scale
         self.height = self.rows * scale
-        self.scale = scale
+        self.scale_w = scale
+        self.scale_h = scale
         self.display = [0] * (self.cols * self.rows)
         self.screen = pygame.display.set_mode(
             (self.width, self.height), pygame.RESIZABLE
@@ -47,10 +48,10 @@ class Renderer:
         """
         self.screen.fill((0, 0, 0))
         for i in range(self.cols * self.rows):
-            x = (i % self.cols) * self.scale
-            y = (i // self.cols) * self.scale
+            x = (i % self.cols) * self.scale_w
+            y = (i // self.cols) * self.scale_h
 
             if self.display[i] == 1:
                 pygame.draw.rect(
-                    self.screen, (255, 255, 255), (x, y, self.scale, self.scale)
+                    self.screen, (255, 255, 255), (x, y, self.scale_w, self.scale_h)
                 )

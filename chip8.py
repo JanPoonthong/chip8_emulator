@@ -26,7 +26,8 @@ def pygame_screen(renderer):
         if event.type == pygame.KEYUP:
             keyboard.pygame_key_up(event)
         if event.type == pygame.VIDEORESIZE:
-            renderer.scale = event.w / renderer.cols
+            renderer.scale_w = event.w / renderer.cols
+            renderer.scale_h = event.h / renderer.rows
     pygame.display.update()
 
 
