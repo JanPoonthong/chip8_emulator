@@ -53,5 +53,7 @@ class Renderer:
 
             if self.display[i] == 1:
                 pygame.draw.rect(
-                    self.screen, (255, 255, 255), (x, y, self.scale_w, self.scale_h)
+                    self.screen,
+                    (255, 255, 255),
+                    (x, y, self.scale_w, self.scale_h),
                 )
