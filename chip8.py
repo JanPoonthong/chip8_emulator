@@ -26,8 +26,8 @@ def pygame_screen(renderer):
         if event.type == pygame.KEYUP:
             keyboard.pygame_key_up(event)
         if event.type == pygame.VIDEORESIZE:
-            renderer.scale_w = event.w / renderer.cols
-            renderer.scale_h = event.h / renderer.rows
+            renderer.scale_w = int(event.w / renderer.cols)
+            renderer.scale_h = int(event.h / renderer.rows)
     pygame.display.update()
 
 
@@ -37,15 +37,13 @@ if __name__ == "__main__":
     programming language which was first used on some do-it-yourself computer
     systems."""
     )
-    parser.add_argument("--scale", type=int, help="number of scale")
     parser.add_argument("rom", help="the ROM file to load on startup")
     args = parser.parse_args()
-    number_of_scale = args.scale
     game_rom = args.rom
     if len(sys.argv) == 1:
         parser.print_help()
         sys.exit()
-    renderer = Renderer(scale=number_of_scale)
+    renderer = Renderer()
     keyboard = Keyboard()
     cpu = Cpu(renderer, keyboard)
     main(game_rom, renderer)

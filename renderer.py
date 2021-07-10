@@ -2,17 +2,18 @@ import pygame
 
 
 class Renderer:
-    def __init__(self, scale):
+    def __init__(self):
         """
         :param scale: the scale for resizing width and height
         """
         pygame.init()
         self.cols = 64
         self.rows = 32
-        self.width = self.cols * scale
-        self.height = self.rows * scale
-        self.scale_w = scale
-        self.scale_h = scale
+        self.scale = self.rows
+        self.width = self.cols * self.scale
+        self.height = self.rows * self.scale
+        self.scale_w = self.scale
+        self.scale_h = self.scale
         self.display = [0] * (self.cols * self.rows)
         self.screen = pygame.display.set_mode(
             (self.width, self.height), pygame.RESIZABLE
