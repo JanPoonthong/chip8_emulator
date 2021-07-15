@@ -51,6 +51,8 @@ class Renderer:
         for i in range(self.cols * self.rows):
             x = (i % self.cols) * self.scale_w
             y = (i // self.cols) * self.scale_h
+            x += 15
+            y += 25
 
             if self.display[i] == 1:
                 pygame.draw.rect(
