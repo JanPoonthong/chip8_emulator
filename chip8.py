@@ -6,6 +6,7 @@ import pygame
 from cpu import Cpu
 from keyboard import Keyboard
 from renderer import Renderer
+from menu import file_explorer
 
 
 def main(game_rom, renderer):
@@ -32,17 +33,7 @@ def pygame_screen(renderer):
 
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(
-        description="""Chip-8 is a simple, interpreted,
-    programming language which was first used on some do-it-yourself computer
-    systems."""
-    )
-    parser.add_argument("rom", help="the ROM file to load on startup")
-    args = parser.parse_args()
-    game_rom = args.rom
-    if len(sys.argv) == 1:
-        parser.print_help()
-        sys.exit()
+    game_rom = file_explorer()
     renderer = Renderer()
     keyboard = Keyboard()
     cpu = Cpu(renderer, keyboard)
