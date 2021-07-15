@@ -6,7 +6,7 @@ import pygame
 from cpu import Cpu
 from keyboard import Keyboard
 from renderer import Renderer
-from menu import file_explorer, menu_bar
+from menu import file_explorer
 
 
 def main(game_rom, renderer):
@@ -34,7 +34,6 @@ def pygame_screen(renderer):
 
 if __name__ == "__main__":
     game_rom = file_explorer()
-    menu_bar()
     renderer = Renderer()
     keyboard = Keyboard()
     cpu = Cpu(renderer, keyboard)

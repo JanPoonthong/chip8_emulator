@@ -60,3 +60,20 @@ class Renderer:
                     (255, 255, 255),
                     (x, y, self.scale_w, self.scale_h),
                 )
+        self.menu_bar()
+
+    def menu_bar(self):
+        color = 255, 255, 255
+        color_dark = 100, 100, 100
+        color_light = 170, 170, 170
+        font = pygame.font.SysFont("Corbel", 20)
+        text = font.render("File", True, color)
+        mouse = pygame.mouse.get_pos()
+        if (
+            13 / 2 <= mouse[0] <= 13 / 2 + 27
+            and 3 / 2 <= mouse[1] <= 3 / 2 + 17
+        ):
+            pygame.draw.rect(self.screen, color_dark, (13, 3, 27, 17))
+        else:
+            pygame.draw.rect(self.screen, color_light, (13, 3, 27, 17))
+        self.screen.blit(text, (15, 5))
