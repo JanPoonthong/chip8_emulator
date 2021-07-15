@@ -1,4 +1,5 @@
 import pygame
+from menu import file_explorer
 
 
 class Renderer:
@@ -69,11 +70,15 @@ class Renderer:
         font = pygame.font.SysFont("Corbel", 20)
         text = font.render("File", True, color)
         mouse = pygame.mouse.get_pos()
-        if (
+        cursor_on_file = (
             13 / 2 <= mouse[0] <= 13 / 2 + 27
             and 3 / 2 <= mouse[1] <= 3 / 2 + 17
-        ):
+        )
+        if cursor_on_file:
             pygame.draw.rect(self.screen, color_dark, (13, 3, 27, 17))
+            if pygame.mouse.get_pressed()[0]:
+                game_rom = file_explorer()
+                main(game_rom, Renderer())  # @@@
         else:
             pygame.draw.rect(self.screen, color_light, (13, 3, 27, 17))
         self.screen.blit(text, (15, 5))
