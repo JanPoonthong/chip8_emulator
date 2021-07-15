@@ -78,7 +78,7 @@ class Renderer:
             pygame.draw.rect(self.screen, color_dark, (13, 3, 27, 17))
             if pygame.mouse.get_pressed()[0]:
                 game_rom = file_explorer()
-                main(game_rom, Renderer())  # @@@
+                return game_rom
         else:
             pygame.draw.rect(self.screen, color_light, (13, 3, 27, 17))
         self.screen.blit(text, (15, 5))

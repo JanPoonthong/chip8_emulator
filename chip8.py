@@ -9,8 +9,12 @@ from menu import file_explorer
 
 
 def main(game_rom, renderer):
+    game_rom_again = renderer.menu_bar()
     cpu.load_sprites_into_memory()
-    cpu.load_rom(f"{game_rom}", 0x200)
+    if game_rom_again is None:
+        cpu.load_rom(f"{game_rom}", 0x200)
+    else:
+        cpu.load_rom(f"{game_rom_again}", 0x200)
     while True:
         cpu.cycle()
         pygame_screen(renderer)
