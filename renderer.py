@@ -65,8 +65,8 @@ class Renderer:
 
     def menu_bar(self):
         color = 255, 255, 255
-        color_dark = 100, 100, 100
-        color_light = 170, 170, 170
+        self.color_dark = 100, 100, 100
+        self.color_light = 170, 170, 170
         font = pygame.font.SysFont("Corbel", 20)
         text = font.render("File", True, color)
         mouse = pygame.mouse.get_pos()
@@ -75,10 +75,12 @@ class Renderer:
             and 3 / 2 <= mouse[1] <= 3 / 2 + 17
         )
         if cursor_on_file:
-            pygame.draw.rect(self.screen, color_dark, (13, 3, 27, 17))
-            if pygame.mouse.get_pressed()[0]:
-                game_rom = file_explorer()
-                return game_rom
+            pygame.draw.rect(self.screen, self.color_dark, (13, 3, 27, 17))
         else:
-            pygame.draw.rect(self.screen, color_light, (13, 3, 27, 17))
+            pygame.draw.rect(self.screen, self.color_light, (13, 3, 27, 17))
         self.screen.blit(text, (15, 5))
+
+    def loading_new_rom(self):
+        if pygame.mouse.get_pressed()[0]:
+            game_rom = file_explorer()
+            return game_rom
