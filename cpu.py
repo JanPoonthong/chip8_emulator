@@ -5,6 +5,9 @@ class Cpu:
     def __init__(self, renderer, keyboard):
         self.renderer = renderer
         self.keyboard = keyboard
+        self.reset()
+
+    def reset(self):
         self.memory = [0] * 4096
         self.v = [0] * 16
         self.i = 0
@@ -14,6 +17,7 @@ class Cpu:
         self.stack = []
         self.pause = False
         self.speed = 10
+        self.renderer.clear()
 
     def load_sprites_into_memory(self):
         sprites = [
@@ -31,6 +35,7 @@ class Cpu:
             self.memory[i] = sprites[i]
 
     def load_rom(self, filename, offset):
+        self.reset()
         rom_data = open(f"{filename}", "rb").read()
         for index, value in enumerate(rom_data):
             self.memory[offset + index] = value

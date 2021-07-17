@@ -6,4 +6,7 @@ def file_explorer():
     root = Tk()
     foo = askopenfilename()
     root.destroy()
-    return foo
+    if foo == ():
+        return None
+    else:
+        return foo
