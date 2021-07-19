@@ -1,5 +1,7 @@
 import pygame
 from menu import file_explorer
+from cpu import Cpu
+from keyboard import Keyboard
 
 
 class Renderer:
