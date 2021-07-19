@@ -19,6 +19,7 @@ class Renderer:
         self.screen = pygame.display.set_mode(
             (self.width, self.height), pygame.RESIZABLE
         )
+        self.rest_game_rom = None
         pygame.display.set_caption("Chip-8 emulator")
 
     def set_pixel(self, x, y):
