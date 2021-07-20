@@ -21,7 +21,6 @@ class Renderer:
         self.screen = pygame.display.set_mode(
             (self.width, self.height), pygame.RESIZABLE
         )
-        self.rest_game_rom = None
         pygame.display.set_caption("Chip-8 emulator")
 
     def set_pixel(self, x, y):
@@ -65,7 +64,7 @@ class Renderer:
                     (x, y, self.scale_w, self.scale_h),
                 )
         self.menu_bar()
-        self.rest_button()
+        self.reset_button()
 
     def menu_bar(self):
         self.color = 255, 255, 255
@@ -89,18 +88,19 @@ class Renderer:
             game_rom = file_explorer()
             return game_rom
 
-    def rest_button(self):
+    def reset_button(self):
         mouse = pygame.mouse.get_pos()
         text = self.font.render("Rest", True, self.color)
-        cursor_on_file = (
+        self.cursor_on_file_reset = (
             98 <= mouse[0] <= 98 + 32 and 3 / 2 <= mouse[1] <= 3 / 2 + 17
         )
-        if cursor_on_file:
+        if self.cursor_on_file_reset:
             pygame.draw.rect(self.screen, self.color_dark, (98, 3, 32, 17))
-            if pygame.mouse.get_pressed()[0]:
-                cpu = Cpu(Renderer(), Keyboard())
-                cpu.reset()
-                self.clear()
         else:
             pygame.draw.rect(self.screen, self.color_light, (98, 3, 32, 17))
         self.screen.blit(text, (100, 5))
+
+    def reset_rom(self):
+        if pygame.mouse.get_pressed()[0] and self.cursor_on_file_reset:
+            self.clear()
+            return True
