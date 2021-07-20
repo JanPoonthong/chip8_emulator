@@ -8,25 +8,25 @@ from renderer import Renderer
 from menu import file_explorer
 
 
-def main(game_rom):
-    cpu.load_sprites_into_memory()
-    cpu.load_rom(f"{game_rom}", 0x200)
-    first_rom = game_rom
+def main(rom):
+    CPU.load_sprites_into_memory()
+    CPU.load_rom(f"{rom}", 0x200)
+    first_rom = rom
     while True:
-        game_rom_again = renderer.loading_new_rom()
-        reset_game = renderer.reset_rom()
+        game_rom_again = RENDERER.loading_new_rom()
+        reset_game = RENDERER.reset_rom()
         if game_rom_again is not None:
-            cpu.load_rom(f"{game_rom_again}", 0x200)
+            CPU.load_rom(f"{game_rom_again}", 0x200)
             second_rom = game_rom_again
             first_rom = None
         if reset_game is True:
-            cpu.reset()
-            cpu.load_sprites_into_memory()
+            CPU.reset()
+            CPU.load_sprites_into_memory()
             if first_rom is None:
-                cpu.load_rom(f"{second_rom}", 0x200)
+                CPU.load_rom(f"{second_rom}", 0x200)
             else:
-                cpu.load_rom(f"{game_rom}", 0x200)
-        cpu.cycle()
+                CPU.load_rom(f"{rom}", 0x200)
+        CPU.cycle()
         pygame_screen()
 
 
@@ -36,22 +36,22 @@ def pygame_screen():
         if event.type == pygame.QUIT:
             sys.exit()
         if event.type == pygame.KEYDOWN:
-            keyboard.pygame_key_down(event)
+            KEYBOARD.pygame_key_down(event)
         if event.type == pygame.KEYUP:
-            keyboard.pygame_key_up(event)
+            KEYBOARD.pygame_key_up(event)
         if event.type == pygame.VIDEORESIZE:
-            renderer.scale_w = int(event.w / renderer.cols)
-            renderer.scale_h = int(event.h / renderer.rows)
+            RENDERER.scale_w = int(event.w / RENDERER.cols)
+            RENDERER.scale_h = int(event.h / RENDERER.rows)
     pygame.display.update()
 
 
 if __name__ == "__main__":
-    game_rom = file_explorer()
-    while game_rom is None:
+    GAME_ROM = file_explorer()
+    while GAME_ROM is None:
         sys.exit()
-        if game_rom is not None:
+        if GAME_ROM is not None:
             break
-    renderer = Renderer()
-    keyboard = Keyboard()
-    cpu = Cpu(renderer, keyboard)
-    main(game_rom)
+    RENDERER = Renderer()
+    KEYBOARD = Keyboard()
+    CPU = Cpu(RENDERER, KEYBOARD)
+    main(GAME_ROM)

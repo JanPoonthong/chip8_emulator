@@ -41,7 +41,7 @@ class Cpu:
             self.memory[offset + index] = value
 
     def cycle(self):
-        for i in range(self.speed):
+        for _ in range(self.speed):
             if not self.pause:
                 opcode = self.memory[self.pc] << 8 | self.memory[self.pc + 1]
                 self.execute_instruction(opcode)

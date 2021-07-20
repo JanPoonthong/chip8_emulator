@@ -8,5 +8,4 @@ def file_explorer():
     root.destroy()
     if foo == ():
         return None
-    else:
-        return foo
+    return foo

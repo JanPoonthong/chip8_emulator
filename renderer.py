@@ -1,7 +1,5 @@
 import pygame
 from menu import file_explorer
-from cpu import Cpu
-from keyboard import Keyboard
 
 
 class Renderer:
@@ -12,15 +10,16 @@ class Renderer:
         pygame.init()
         self.cols = 64
         self.rows = 32
-        self.scale = self.rows
-        self.width = self.cols * self.scale
-        self.height = self.rows * self.scale
-        self.scale_w = self.scale
-        self.scale_h = self.scale
+        width = self.cols * self.rows
+        height = self.rows * self.rows
+        self.scale_w = self.rows
+        self.scale_h = self.rows
         self.display = [0] * (self.cols * self.rows)
-        self.screen = pygame.display.set_mode(
-            (self.width, self.height), pygame.RESIZABLE
-        )
+        self.screen = pygame.display.set_mode((width, height), pygame.RESIZABLE)
+        self.color = 255, 255, 255
+        self.color_dark = 100, 100, 100
+        self.color_light = 170, 170, 170
+        self.font = pygame.font.SysFont("Corbel", 20)
         pygame.display.set_caption("Chip-8 emulator")
 
     def set_pixel(self, x, y):
@@ -52,10 +51,9 @@ class Renderer:
         """
         self.screen.fill((0, 0, 0))
         for i in range(self.cols * self.rows):
-            x = (i % self.cols) * self.scale_w
-            y = (i // self.cols) * self.scale_h
-            x += 15
-            y += 25
+            offset = [15, 25]
+            x = ((i % self.cols) * self.scale_w) + offset[0]
+            y = ((i // self.cols) * self.scale_h) + offset[1]
 
             if self.display[i] == 1:
                 pygame.draw.rect(
@@ -67,16 +65,12 @@ class Renderer:
         self.reset_button()
 
     def menu_bar(self):
-        self.color = 255, 255, 255
-        self.color_dark = 100, 100, 100
-        self.color_light = 170, 170, 170
-        self.font = pygame.font.SysFont("Corbel", 20)
-        text = self.font.render("File", True, self.color)
-        mouse = pygame.mouse.get_pos()
+        self.mouse = pygame.mouse.get_pos()
         self.cursor_on_file = (
-            13 / 2 <= mouse[0] <= 13 / 2 + 27
-            and 3 / 2 <= mouse[1] <= 3 / 2 + 17
+            13 / 2 <= self.mouse[0] <= 13 / 2 + 27
+            and 3 / 2 <= self.mouse[1] <= 3 / 2 + 17
         )
+        text = self.font.render("File", True, self.color)
         if self.cursor_on_file:
             pygame.draw.rect(self.screen, self.color_dark, (13, 3, 27, 17))
         else:
@@ -89,10 +83,10 @@ class Renderer:
             return game_rom
 
     def reset_button(self):
-        mouse = pygame.mouse.get_pos()
         text = self.font.render("Rest", True, self.color)
         self.cursor_on_file_reset = (
-            98 <= mouse[0] <= 98 + 32 and 3 / 2 <= mouse[1] <= 3 / 2 + 17
+            98 <= self.mouse[0] <= 98 + 32
+            and 3 / 2 <= self.mouse[1] <= 3 / 2 + 17
         )
         if self.cursor_on_file_reset:
             pygame.draw.rect(self.screen, self.color_dark, (98, 3, 32, 17))
