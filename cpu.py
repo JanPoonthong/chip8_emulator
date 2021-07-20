@@ -3,20 +3,20 @@ import random
 
 class Cpu:
     def __init__(self, renderer, keyboard):
+        self.speed = 10
+        self.pause = False
+        self.stack = []
+        self.pc = 0x200
+        self.sound_timer = 0
+        self.delay_timer = 0
+        self.i = 0
+        self.v = [0] * 16
+        self.memory = [0] * 4096
         self.renderer = renderer
         self.keyboard = keyboard
-        self.reset()
 
     def reset(self):
-        self.memory = [0] * 4096
-        self.v = [0] * 16
-        self.i = 0
-        self.delay_timer = 0
-        self.sound_timer = 0
-        self.pc = 0x200
-        self.stack = []
-        self.pause = False
-        self.speed = 10
+        self.__init__(self.renderer, self.keyboard)
         self.renderer.clear()
 
     def load_sprites_into_memory(self):

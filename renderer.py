@@ -4,10 +4,9 @@ from menu import file_explorer
 
 class Renderer:
     def __init__(self):
-        """
-        :param scale: the scale for resizing width and height
-        """
         pygame.init()
+        self.cursor_on_file = None
+        self.cursor_on_file_reset = None
         self.cols = 64
         self.rows = 32
         width = self.cols * self.rows
@@ -44,6 +43,16 @@ class Renderer:
     def clear(self):
         self.display = [0] * (self.cols * self.rows)
 
+    def mouse_position(self):
+        mouse = pygame.mouse.get_pos()
+        self.cursor_on_file = (
+            13 / 2 <= mouse[0] <= 13 / 2 + 27
+            and 3 / 2 <= mouse[1] <= 3 / 2 + 17
+        )
+        self.cursor_on_file_reset = (
+            98 <= mouse[0] <= 98 + 32 and 3 / 2 <= mouse[1] <= 3 / 2 + 17
+        )
+
     def render(self):
         """
         x goes through width of the screen and y goes through height of the
@@ -65,11 +74,7 @@ class Renderer:
         self.reset_button()
 
     def menu_bar(self):
-        self.mouse = pygame.mouse.get_pos()
-        self.cursor_on_file = (
-            13 / 2 <= self.mouse[0] <= 13 / 2 + 27
-            and 3 / 2 <= self.mouse[1] <= 3 / 2 + 17
-        )
+        self.mouse_position()
         text = self.font.render("File", True, self.color)
         if self.cursor_on_file:
             pygame.draw.rect(self.screen, self.color_dark, (13, 3, 27, 17))
@@ -83,11 +88,8 @@ class Renderer:
             return game_rom
 
     def reset_button(self):
+        self.mouse_position()
         text = self.font.render("Rest", True, self.color)
-        self.cursor_on_file_reset = (
-            98 <= self.mouse[0] <= 98 + 32
-            and 3 / 2 <= self.mouse[1] <= 3 / 2 + 17
-        )
         if self.cursor_on_file_reset:
             pygame.draw.rect(self.screen, self.color_dark, (98, 3, 32, 17))
         else:

@@ -47,10 +47,8 @@ def pygame_screen():
 
 if __name__ == "__main__":
     GAME_ROM = file_explorer()
-    while GAME_ROM is None:
+    if GAME_ROM is None:
         sys.exit()
-        if GAME_ROM is not None:
-            break
     RENDERER = Renderer()
     KEYBOARD = Keyboard()
     CPU = Cpu(RENDERER, KEYBOARD)
