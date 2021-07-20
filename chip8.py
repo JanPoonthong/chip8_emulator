@@ -15,6 +15,8 @@ def main(game_rom):
         reset_game = renderer.reset_rom()
         if reset_game is True:
             cpu.reset()
+            cpu.load_sprites_into_memory()
+            cpu.load_rom(f"{game_rom}", 0x200)
         game_rom_again = renderer.loading_new_rom()
         if game_rom_again is not None:
             cpu.load_rom(f"{game_rom_again}", 0x200)
