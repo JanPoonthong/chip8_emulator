@@ -14,10 +14,10 @@ def main(rom):
     while True:
         game_rom_again = RENDERER.loading_new_rom()
         reset_game = RENDERER.reset_rom()
-        second_rom = False
         if game_rom_again is not None:
             CPU.load_rom(f"{game_rom_again}", 0x200)
-            second_rom = True
+            # Plase submit PR and write it for me
+            rom = game_rom_again
         if reset_game is True:
             CPU.reset()
             CPU.load_sprites_into_memory()
