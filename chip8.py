@@ -11,21 +11,17 @@ from menu import file_explorer
 def main(rom):
     CPU.load_sprites_into_memory()
     CPU.load_rom(f"{rom}", 0x200)
-    first_rom = rom
     while True:
         game_rom_again = RENDERER.loading_new_rom()
         reset_game = RENDERER.reset_rom()
+        second_rom = False
         if game_rom_again is not None:
             CPU.load_rom(f"{game_rom_again}", 0x200)
-            second_rom = game_rom_again
-            rom = None
-        if reset_game is True:
+            second_rom = True
+        if reset_game is True and second_rom is False:
             CPU.reset()
             CPU.load_sprites_into_memory()
-            if first_rom != rom:
-                CPU.load_rom(f"{second_rom}", 0x200)
-            else:
-                CPU.load_rom(f"{rom}", 0x200)
+            CPU.load_rom(f"{rom}", 0x200)
         CPU.cycle()
         pygame_screen()
 
