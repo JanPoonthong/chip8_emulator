@@ -16,7 +16,6 @@ def main(rom):
         reset_game = RENDERER.reset_rom()
         if game_rom_again is not None:
             CPU.load_rom(f"{game_rom_again}", 0x200)
-            # Plase submit PR and write it for me
             rom = game_rom_again
         if reset_game is True:
             CPU.reset()
