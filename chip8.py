@@ -18,7 +18,7 @@ def main(rom):
         if game_rom_again is not None:
             CPU.load_rom(f"{game_rom_again}", 0x200)
             second_rom = True
-        if reset_game is True and second_rom is False:
+        if reset_game is True:
             CPU.reset()
             CPU.load_sprites_into_memory()
             CPU.load_rom(f"{rom}", 0x200)
