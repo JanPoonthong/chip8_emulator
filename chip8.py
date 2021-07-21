@@ -18,11 +18,11 @@ def main(rom):
         if game_rom_again is not None:
             CPU.load_rom(f"{game_rom_again}", 0x200)
             second_rom = game_rom_again
-            first_rom = None
+            rom = None
         if reset_game is True:
             CPU.reset()
             CPU.load_sprites_into_memory()
-            if first_rom is None:
+            if first_rom != rom:
                 CPU.load_rom(f"{second_rom}", 0x200)
             else:
                 CPU.load_rom(f"{rom}", 0x200)
