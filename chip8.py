@@ -12,39 +12,39 @@ def main():
     rom = file_explorer()
     if rom is None:
         sys.exit()
-    CPU.load_sprites_into_memory()
-    CPU.load_rom(f"{rom}", 0x200)
+    renderer = Renderer()
+    keyboard = Keyboard()
+    cpu = Cpu(renderer, keyboard)
+    cpu.load_sprites_into_memory()
+    cpu.load_rom(f"{rom}", 0x200)
     while True:
-        game_rom_again = RENDERER.loading_new_rom()
-        reset_game = RENDERER.reset_rom()
+        game_rom_again = renderer.loading_new_rom()
+        reset_game = renderer.reset_rom()
         if game_rom_again is not None:
-            CPU.load_rom(f"{game_rom_again}", 0x200)
+            cpu.load_rom(f"{game_rom_again}", 0x200)
             rom = game_rom_again
         if reset_game is True:
-            CPU.reset()
-            CPU.load_sprites_into_memory()
-            CPU.load_rom(f"{rom}", 0x200)
-        CPU.cycle()
-        pygame_screen()
+            cpu.reset()
+            cpu.load_sprites_into_memory()
+            cpu.load_rom(f"{rom}", 0x200)
+        cpu.cycle()
+        pygame_screen(keyboard, renderer)
 
 
-def pygame_screen():
+def pygame_screen(keyboard, renderer):
     pygame.time.Clock().tick(90)
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             sys.exit()
         if event.type == pygame.KEYDOWN:
-            KEYBOARD.pygame_key_down(event)
+            keyboard.pygame_key_down(event)
         if event.type == pygame.KEYUP:
-            KEYBOARD.pygame_key_up(event)
+            keyboard.pygame_key_up(event)
         if event.type == pygame.VIDEORESIZE:
-            RENDERER.scale_w = int(event.w / RENDERER.cols)
-            RENDERER.scale_h = int(event.h / RENDERER.rows)
+            renderer.scale_w = int(event.w / renderer.cols)
+            renderer.scale_h = int(event.h / renderer.rows)
     pygame.display.update()
 
 
 if __name__ == "__main__":
-    RENDERER = Renderer()
-    KEYBOARD = Keyboard()
-    CPU = Cpu(RENDERER, KEYBOARD)
     main()
