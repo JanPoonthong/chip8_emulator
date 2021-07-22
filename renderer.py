@@ -6,8 +6,8 @@ from menu import file_explorer
 class Renderer:
     def __init__(self):
         pygame.init()
-        self.cursor_on_file = None
-        self.cursor_on_file_reset = None
+        self.cursor_on_file = False
+        self.cursor_on_file_reset = False
         self.cols = 64
         self.rows = 32
         width = self.cols * self.rows
