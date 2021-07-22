@@ -17,6 +17,7 @@ def main():
     cpu = Cpu(renderer, keyboard)
     game_starter(rom, cpu, renderer, keyboard)
 
+
 def game_starter(rom, cpu, renderer, keyboard):
     cpu.load_sprites_into_memory()
     cpu.load_rom(f"{rom}", 0x200)
