@@ -8,7 +8,10 @@ from menu import file_explorer
 from renderer import Renderer
 
 
-def main(rom):
+def main():
+    rom = file_explorer()
+    if rom is None:
+        sys.exit()
     CPU.load_sprites_into_memory()
     CPU.load_rom(f"{rom}", 0x200)
     while True:
@@ -41,10 +44,7 @@ def pygame_screen():
 
 
 if __name__ == "__main__":
-    GAME_ROM = file_explorer()
-    if GAME_ROM is None:
-        sys.exit()
     RENDERER = Renderer()
     KEYBOARD = Keyboard()
     CPU = Cpu(RENDERER, KEYBOARD)
-    main(GAME_ROM)
+    main()
