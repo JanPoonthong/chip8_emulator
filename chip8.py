@@ -4,8 +4,8 @@ import pygame
 
 from cpu import Cpu
 from keyboard import Keyboard
-from renderer import Renderer
 from menu import file_explorer
+from renderer import Renderer
 
 
 def main(rom):
