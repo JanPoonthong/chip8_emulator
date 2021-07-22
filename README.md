@@ -19,6 +19,6 @@ Run:
 
 ## Run
 
-    $ python3 chip8.py --scale <int> <pathtofile>
+    $ python3 chip8.py
 
 [c8game]: https://www.zophar.net/pdroms/chip8/chip-8-games-pack.html
