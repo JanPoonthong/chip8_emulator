@@ -20,17 +20,17 @@ def main():
 
 def game_starter(rom, cpu, renderer, keyboard):
     cpu.load_sprites_into_memory()
-    cpu.load_rom(f"{rom}", 0x200)
+    cpu.load_rom(rom, 0x200)
     while True:
         game_rom_again = renderer.loading_new_rom()
         reset_game = renderer.reset_rom()
         if game_rom_again is not None:
-            cpu.load_rom(f"{game_rom_again}", 0x200)
+            cpu.load_rom(game_rom_again, 0x200)
             rom = game_rom_again
         if reset_game is True:
             cpu.reset()
             cpu.load_sprites_into_memory()
-            cpu.load_rom(f"{rom}", 0x200)
+            cpu.load_rom(rom, 0x200)
         cpu.cycle()
         pygame_screen(keyboard, renderer)
 

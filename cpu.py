@@ -36,7 +36,7 @@ class Cpu:
 
     def load_rom(self, filename, offset):
         self.reset()
-        rom_data = open(f"{filename}", "rb").read()
+        rom_data = open(filename, "rb").read()
         for index, value in enumerate(rom_data):
             self.memory[offset + index] = value
 
