@@ -47,12 +47,13 @@ class Renderer:
     def mouse_position(self):
         mouse = pygame.mouse.get_pos()
         self.cursor_on_file = (
-            13 / 2 <= mouse[0] <= 13 / 2 + 27
-            and 3 / 2 <= mouse[1] <= 3 / 2 + 17
+            13 / 2 <= mouse[0] <= 13 / 2 + 40
+            and 3 / 2 <= mouse[1] <= 3 / 2 + 20
         )
         self.cursor_on_file_reset = (
-            98 <= mouse[0] <= 98 + 32 and 3 / 2 <= mouse[1] <= 3 / 2 + 17
+            98 <= mouse[0] <= 98 + 40 and 3 / 2 <= mouse[1] <= 3 / 2 + 20
         )
+        return mouse
 
     def render(self):
         """
@@ -78,10 +79,10 @@ class Renderer:
         self.mouse_position()
         text = self.font.render("File", True, self.color)
         if self.cursor_on_file:
-            pygame.draw.rect(self.screen, self.color_dark, (13, 3, 27, 17))
+            pygame.draw.rect(self.screen, self.color_dark, (13, 3, 40, 20))
         else:
-            pygame.draw.rect(self.screen, self.color_light, (13, 3, 27, 17))
-        self.screen.blit(text, (15, 5))
+            pygame.draw.rect(self.screen, self.color_light, (13, 3, 40, 20))
+        self.screen.blit(text, (20, 6.5))
 
     def loading_new_rom(self):
         if pygame.mouse.get_pressed()[0] and self.cursor_on_file:
@@ -90,12 +91,12 @@ class Renderer:
 
     def reset_button(self):
         self.mouse_position()
-        text = self.font.render("Rest", True, self.color)
+        text = self.font.render("Reset", True, self.color)
         if self.cursor_on_file_reset:
-            pygame.draw.rect(self.screen, self.color_dark, (98, 3, 32, 17))
+            pygame.draw.rect(self.screen, self.color_dark, (98, 3, 40, 20))
         else:
-            pygame.draw.rect(self.screen, self.color_light, (98, 3, 32, 17))
-        self.screen.blit(text, (100, 5))
+            pygame.draw.rect(self.screen, self.color_light, (98, 3, 40, 20))
+        self.screen.blit(text, (100, 6.5))
 
     def reset_rom(self):
         if pygame.mouse.get_pressed()[0] and self.cursor_on_file_reset:
