@@ -50,5 +50,6 @@ Run:
     $ python3 chip8.py
 
 [c8game]: https://www.zophar.net/pdroms/chip8/chip-8-games-pack.html
+[python-download]: https://www.python.org/
 [pygame-download]: https://www.pygame.org/wiki/GettingStarted
 [tkinter-download]: https://docs.python.org/3/library/tkinter.html
