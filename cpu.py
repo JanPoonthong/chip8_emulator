@@ -1,4 +1,8 @@
 import random
+from pygame import mixer
+
+mixer.init()
+mixer.music.load("sound.mp3")
 
 
 class Cpu:
@@ -167,6 +171,7 @@ class Cpu:
                 self.delay_timer = self.v[x]
             elif last_two_hex == 0x18:
                 self.sound_timer = self.v[x]
+                mixer.music.play()
             elif last_two_hex == 0x1E:
                 self.i += self.v[x]
             elif last_two_hex == 0x29:
