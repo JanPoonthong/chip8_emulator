@@ -21,31 +21,27 @@ Prerequisites:
 - [Pygame][pygame-download]
 - [Tkinter][tkinter-download]
 
-## Dowload
-
-Run:
+### Dowload
 
     $ sudo apt-get install python3-pygame (Linux)
     $ python3 -m pip install -U pygame --user (MacOS)
 
-## Run
+### Run
 
     $ python3 chip8.py
 
-### Windows
+## Windows
 
 Prerequisites:
 
 - [Python][python-download]
 - [Pygame][pygame-download]
 
-## Dowload
-
-Run:
+### Dowload
 
     $ pip3 install pygame
 
-## Run
+### Run
 
     $ python3 chip8.py
 
