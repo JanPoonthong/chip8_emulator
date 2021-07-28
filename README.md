@@ -24,6 +24,7 @@ Prerequisites:
 ### Dowload
 
     $ sudo apt-get install python3-pygame (Linux)
+    $ sudo apt-get install python3-tk (Linux)
     $ python3 -m pip install -U pygame --user (MacOS)
 
 ### Run
